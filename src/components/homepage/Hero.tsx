@@ -43,7 +43,7 @@ export default function Hero() {
     }, [])
 
     return (
-        <div className="bg-black bg-[url('/assests/hompage/hero-bg.png')]   bg-no-repeat pt-[80px] pb-[80px] px-6 md:pt-[120px] md:pb-[120px] md:px-8 lg:pt-[180px] lg:pb-[180px] xl:px-4 2xl:px-0">
+        <div className="bg-black bg-[url('/assets/hompage/hero-bg.png')]   bg-no-repeat pt-[80px] pb-[80px] px-6 md:pt-[120px] md:pb-[120px] md:px-8 lg:pt-[180px] lg:pb-[180px] xl:px-4 2xl:px-0">
             <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-col lg:flex-row gap-6 justify-center">
                 <div className="font-proxima lg:w-[57%] text-[36px] font-semibold max-w-none md:text-[60px] md:max-w-none lg:text-[60px] xl:text-[70px] 2xl:text-[100px] lg:max-w-225 text-[#F4F4EA] tracking-[-0.02em] leading-[36px] md:leading-[60px] lg:leading-[100px] uppercase relative z-20">
                     Turning Creative Ideas Into Powerful Digital Experiences

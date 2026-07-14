@@ -1,3 +1,4 @@
+import Blogs from "@/components/homepage/Blogs";
 import Hero from "@/components/homepage/Hero";
 import VideoPlayingContainer from "@/components/homepage/VideoPlayingContainer";
 import Footer from "@/components/shared/Footer";
@@ -9,6 +10,7 @@ export default function ComingSoonPage() {
       <Navbar/>
       <Hero/>
       <VideoPlayingContainer/>
+      <Blogs/>
       <Footer/>
     </div>
   );

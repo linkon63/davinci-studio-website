@@ -1,7 +1,10 @@
+"use client"
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { FaBehance, FaDribbble, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const socialLinks = [
     { name: "FACEBOOK", icon: FaFacebookF, href: "#" },
@@ -12,8 +15,33 @@ const socialLinks = [
 
 export default function Footer() {
 
+    const footerRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        if (!footerRef.current) return;
+
+        const buttons = footerRef.current.querySelectorAll(".social-btn");
+
+        buttons.forEach((btn: any) => {
+            const redBg = btn.querySelector(".red-bg");
+
+            gsap.set(redBg, { yPercent: 100 });
+
+            const tl = gsap.timeline({ paused: true });
+
+            tl.to(redBg, {
+                yPercent: 0,
+                duration: 0.4,
+                ease: "power3.out"
+            });
+
+            btn.addEventListener("mouseenter", () => tl.play());
+            btn.addEventListener("mouseleave", () => tl.reverse());
+        });
+    }, []);
+
     return (
-        <footer className="bg-primary-color">
+        <footer ref={footerRef} className="bg-primary-color">
             {/* Top Section */}
             <section className="container mx-auto py-10 md:py-20">
                 <div className="mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-10 md:gap-0">
@@ -22,7 +50,7 @@ export default function Footer() {
                             <h1 className="text-sm md:text-base">GET&apos;S STARTED A PROJECTS?</h1>
                             <div className="relative w-[77px] h-[24px]">
                                 <Image
-                                    src="/assests/footer/arrow.svg"
+                                    src="/assets/footer/arrow.svg"
                                     alt="arrow"
                                     fill
                                     className="object-contain"
@@ -46,10 +74,11 @@ export default function Footer() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="bg-secondary-dark hover:bg-recording-red cursor-pointer text-white-color px-4 py-3 md:px-5 md:py-4 rounded-full font-semibold text-sm md:text-lg flex items-center gap-2 transition-colors"
+                                    className="social-btn bg-secondary-dark relative overflow-hidden flex items-center gap-2 px-6 py-4 rounded-[999px] font-proxima font-semibold text-white-color"
                                 >
-                                    <link.icon className="w-4 h-4 md:w-5 md:h-5" />
-                                    {link.name}
+                                    <div className="red-bg absolute inset-0 bg-recording-red "></div>
+                                    <link.icon className="w-5 h-5 relative z-10" />
+                                    <span className="relative z-10">{link.name}</span>
                                 </Link>
                             ))}
                         </div>
@@ -58,14 +87,18 @@ export default function Footer() {
                     <div className="font-proxima font-semibold text-lg">
                         <Link
                             href="#"
-                            className="w-32 h-32 md:w-40 md:h-40 rounded-full text-white-color bg-secondary-dark hover:bg-recording-red flex flex-col items-center justify-center text-center transition-all duration-300"
+                            className="w-32 h-32 social-btn md:w-40 md:h-40 rounded-full text-white-color bg-secondary-dark relative overflow-hidden flex flex-col items-center justify-center text-center"
                         >
-                            <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 mb-1" />
-                            <span className="text-xs md:text-sm font-bold leading-tight">
-                                START THE
-                                <br />
-                                JOURNEY
-                            </span>
+                            <div className="red-bg absolute inset-0 bg-recording-red"></div>
+
+                            <div className="relative z-10 flex flex-col items-center">
+                                <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 mb-1" />
+                                <span className="text-xs md:text-sm font-bold leading-tight">
+                                    START THE
+                                    <br />
+                                    JOURNEY
+                                </span>
+                            </div>
                         </Link>
                     </div>
                 </div>
@@ -123,7 +156,7 @@ export default function Footer() {
 
                 {/* Large Branding Text */}
                 <div className="mt-10 md:mt-20 text-center">
-                    <h2 className="text-[10vw] font-semibold text-white-color leading-none select-none">
+                    <h2 className="text-[8vw] font-semibold text-white-color leading-none select-none">
                         DA VINCI MEDIA
                     </h2>
                 </div>

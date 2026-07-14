@@ -84,7 +84,7 @@ export default function Navbar() {
             <li key={item.name}>
               <Link
                 href={item.path}
-                className="text-white font-proxima font-semibold text-lg hover:text-gray-400 transition-colors"
+                className="text-white-color font-proxima font-semibold text-lg hover:text-recording-red transition-colors"
               >
                 {item.name}
               </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.path}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-white font-proxima font-semibold text-3xl hover:text-gray-400 transition-colors"
+                className="text-white-color font-proxima font-semibold text-3xl hover:text-recording-red transition-colors"
               >
                 {item.name}
               </Link>

@@ -19,7 +19,7 @@ export default function Hero() {
             isXl: "(max-width: 1535px) and (min-width: 1280px)",
             isLg: "(max-width: 1279px) and (min-width: 1024px)",
         }, (context) => {
-            const { is2xl, isXl, isLg } = context.conditions as any;
+            const { is2xl, isXl } = context.conditions as Record<string, boolean>;
 
             const config = is2xl
                 ? { x: -460, y: 700, scale: 2.4 }

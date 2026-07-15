@@ -22,7 +22,7 @@ export default function Footer() {
 
         const buttons = footerRef.current.querySelectorAll(".social-btn");
 
-        buttons.forEach((btn: any) => {
+        buttons.forEach((btn: Element) => {
             const redBg = btn.querySelector(".red-bg");
 
             gsap.set(redBg, { yPercent: 100 });

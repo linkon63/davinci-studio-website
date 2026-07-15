@@ -10,65 +10,13 @@ import Breadcrumb from "@/components/shared/Breadcrumb";
 import CaseRowRenderer from "@/components/work/CaseRowRenderer";
 import LoadMoreButton from "@/components/work/LoadMoreButton";
 import { CaseStudy, CaseRow, BreadcrumbPath } from "@/types/work";
+import { initialCaseStudies } from "@/data/work";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const breadcrumbPaths: BreadcrumbPath[] = [
   { name: "Home", href: "/" },
   { name: "Work", active: true },
-];
-
-const initialCaseStudies: CaseStudy[] = [
-  {
-    id: 1,
-    title: "FinFlow Business Intelligence SaaS Dashboard",
-    category: "Product Design",
-    year: "2025",
-    image: "/assets/img/work/work1.webp",
-    aspectRatio: "aspect-[480/371]",
-    widthClass: "lg:max-w-[480px]",
-    sizes: "(max-width: 1024px) 100vw, 480px",
-  },
-  {
-    id: 2,
-    title: "Aura Brand Identity & Web Platform",
-    category: "Branding & Web",
-    year: "2025",
-    image: "/assets/img/work/work2.webp",
-    aspectRatio: "aspect-[700/535]",
-    widthClass: "lg:max-w-[700px]",
-    sizes: "(max-width: 1024px) 100vw, 700px",
-  },
-  {
-    id: 3,
-    title: "NEWME Luxury Fashion Editorial Magazine",
-    category: "Creative Direction",
-    year: "2026",
-    image: "/assets/img/work/work3.webp",
-    aspectRatio: "aspect-[1096/535]",
-    widthClass: "lg:max-w-[1096px]",
-    sizes: "(max-width: 1024px) 100vw, 1096px",
-  },
-  {
-    id: 4,
-    title: "Nova Corp Identity Stationery Mockups",
-    category: "Brand Systems",
-    year: "2026",
-    image: "/assets/img/work/work4.webp",
-    aspectRatio: "aspect-[608/497]",
-    widthClass: "flex-1",
-    sizes: "(max-width: 1024px) 100vw, 608px",
-  },
-  {
-    id: 5,
-    title: "Omni Fintech Mobile App Architecture",
-    category: "UI/UX Strategy",
-    year: "2026",
-    image: "/assets/img/work/work5.webp",
-    aspectRatio: "aspect-[608/497]",
-    widthClass: "flex-1",
-    sizes: "(max-width: 1024px) 100vw, 608px",
-  },
 ];
 
 function groupCasesForLayout(items: CaseStudy[]): CaseRow[] {

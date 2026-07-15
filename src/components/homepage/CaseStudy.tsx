@@ -1,11 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { CaseStudy } from "@/utils/case-study";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+
+
+gsap.registerPlugin(ScrollTrigger);
 
 const initialCaseStudies: CaseStudy[] = [
   {
@@ -53,15 +59,95 @@ const initialCaseStudies: CaseStudy[] = [
 export default function CaseStudyGallery() {
   const [cases, setCases] = useState<CaseStudy[]>(initialCaseStudies);
 
+  const container = useRef(null);
+  const card1Ref = useRef(null);
+  const card2Ref = useRef(null);
+  const card3Ref = useRef(null);
+  const card4Ref = useRef(null);
+  const card5Ref = useRef(null);
+
+  useGSAP(() => {
+    const cards = [
+      { ref: card1Ref, x: -100 },
+      { ref: card2Ref, x: -100 },
+      { ref: card3Ref, x: 100 },
+      { ref: card4Ref, x: -100 },
+      { ref: card5Ref, x: -100 },
+    ];
+
+    cards.forEach(({ ref, x }) => {
+      if (!ref.current) return;
+
+      const tween = gsap.fromTo(ref.current,
+        { x, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: "power2.out", paused: true }
+      );
+
+      ScrollTrigger.create({
+        trigger: ref.current,
+        start: "top 80%",
+        onEnter: () => tween.play(),
+      });
+
+      ScrollTrigger.create({
+        trigger: ref.current,
+        start: "top 40%",
+        onLeaveBack: () => tween.reverse(),
+      });
+    });
+
+    const selector = gsap.utils.selector(container.current);
+    const allCards = selector("[class*='case-card']");
+
+    allCards.forEach((card: HTMLElement) => {
+      const img = card.querySelector("img");
+
+      card.addEventListener("mousemove", (e: MouseEvent) => {
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+        const rotateX = -((e.clientY - centerY) / (height / 2)) * 8;
+        const rotateY = ((e.clientX - centerX) / (width / 2)) * 8;
+
+        gsap.to(card, {
+          rotateX,
+          rotateY,
+          scale: 1.02,
+          duration: 0.5,
+          ease: "power2.out",
+          transformPerspective: 1000,
+          transformStyle: "preserve-3d",
+        });
+
+        if (img) {
+          gsap.to(img, { scale: 1.1, duration: 0.5, ease: "power2.out" });
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          scale: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        if (img) {
+          gsap.to(img, { scale: 1, duration: 0.5, ease: "power2.out" });
+        }
+      });
+    });
+  }, { scope: container });
+
   return (
-    <div className=" flex flex-col font-proxima">
+    <div ref={container} className=" flex flex-col font-proxima">
       {/* Case Studies Section */}
       <main className="flex flex-col gap-16">
         {/* Row 1: Side by Side (Tablet & Laptop) */}
         {cases.length >= 2 && (
           <div className="flex flex-row items-start justify-between gap-12 w-full">
             {/* Card 1: Smaller Column (w-[480px] equivalent) */}
-            <div className="case-card cursor-pointer w-full max-w-[480px] flex flex-col gap-6">
+            <div ref={card1Ref} className="case-card-1 cursor-pointer w-full max-w-[480px] flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[0].aspectRatio)}>
                 <Image
                   src={cases[0].image}
@@ -84,7 +170,7 @@ export default function CaseStudyGallery() {
             </div>
 
             {/* Card 2: Larger Column (w-[700px] equivalent) */}
-            <div className="case-card cursor-pointer w-full max-w-[700px] flex flex-col gap-6">
+            <div ref={card2Ref} className="case-card-2 cursor-pointer w-full max-w-[700px] flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[1].aspectRatio)}>
                 <Image
                   src={cases[1].image}
@@ -111,7 +197,7 @@ export default function CaseStudyGallery() {
         {/* Row 2: Centered Large Card (NEWME Magazine, w-[1096px] equivalent) */}
         {cases.length >= 3 && (
           <div className="w-full flex justify-center">
-            <div className="case-card cursor-pointer w-full max-w-[1096px] flex flex-col gap-6">
+            <div ref={card3Ref} className="case-card-3 cursor-pointer w-full max-w-[1096px] flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[2].aspectRatio)}>
                 <Image
                   src={cases[2].image}
@@ -138,7 +224,7 @@ export default function CaseStudyGallery() {
         {cases.length >= 5 && (
           <div className="flex flex-row items-start justify-between gap-12 w-full">
             {/* Card 4: Left Column (flex-1) */}
-            <div className="case-card cursor-pointer w-full flex-1 flex flex-col gap-6">
+            <div ref={card4Ref} className="case-card-4 cursor-pointer w-full flex-1 flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[3].aspectRatio)}>
                 <Image
                   src={cases[3].image}
@@ -160,7 +246,7 @@ export default function CaseStudyGallery() {
             </div>
 
             {/* Card 5: Right Column (flex-1) */}
-            <div className="case-card cursor-pointer w-full flex-1 flex flex-col gap-6">
+            <div ref={card5Ref} className="case-card-5 cursor-pointer w-full flex-1 flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[4].aspectRatio)}>
                 <Image
                   src={cases[4].image}
@@ -184,7 +270,7 @@ export default function CaseStudyGallery() {
         )}
 
         {/* Dynamically Loaded Extra Cases (if any) */}
-        {cases.length > 5 && (
+        {cases.length > 5 && (    
           <div className="grid grid-cols-1 gap-12 w-full">
             {cases.slice(5).map((extraCase) => (
               <div key={extraCase.id} className="case-card cursor-pointer w-full flex flex-col gap-6">

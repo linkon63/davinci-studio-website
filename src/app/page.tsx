@@ -5,10 +5,11 @@ import OurServices from "@/components/homepage/OurServices";
 import VideoPlayingContainer from "@/components/homepage/VideoPlayingContainer";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 
 export default function ComingSoonPage() {
   return (
-    <div>
+    <SmoothScroll>
       <Navbar />
       <Hero />
       <VideoPlayingContainer />
@@ -16,6 +17,6 @@ export default function ComingSoonPage() {
       <OurServices />
       <Blogs />
       <Footer />
-    </div>
+     </SmoothScroll>
   );
 }

@@ -6,12 +6,7 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
-
-interface BreadcrumbPath {
-  name: string;
-  href?: string;
-  active?: boolean;
-}
+import { BreadcrumbPath } from "@/types/work";
 
 interface BreadcrumbProps {
   title: string;
@@ -60,7 +55,6 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
         className
       )}
     >
-      {/* Background Giant Vector "V" */}
       <div className="absolute left-0 top-[-50px] md:top-[-72px] w-[500px] md:w-[871px] h-full pointer-events-none opacity-[0.04] z-0 select-none">
         <svg
           width="100%"
@@ -82,7 +76,6 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col gap-6 md:gap-8">
-          {/* Title with Masked Word Reveal */}
           <h1 className="text-white-color text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-proxima uppercase leading-tight tracking-tight flex flex-wrap gap-x-4 overflow-hidden py-1">
             {title.split(" ").map((word, i) => (
               <span key={i} className="inline-flex overflow-hidden">
@@ -93,16 +86,13 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
             ))}
           </h1>
 
-          {/* Description and Path Navigation */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-11">
             <p className="text-body-color text-base sm:text-lg md:text-xl lg:text-2xl font-semibold font-proxima leading-relaxed md:leading-8 max-w-[676px]">
               {description}
             </p>
 
-            {/* Separator Line */}
             <div className="hidden lg:block lg:flex-grow h-[1px] bg-zinc-700 max-w-[384px]" />
 
-            {/* Path links */}
             <nav
               aria-label="Breadcrumb"
               className="flex items-center gap-3 bg-transparent py-2 border-b border-transparent"

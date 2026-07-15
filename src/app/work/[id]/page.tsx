@@ -8,6 +8,7 @@ import { use, useRef } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import { ProjectDetail } from "@/types/work";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,9 +16,160 @@ interface WorkDetailsProps {
   params: Promise<{ id: string }>;
 }
 
+const projectDetails: Record<number, ProjectDetail> = {
+  1: {
+    title: "FinFlow Business Intelligence SaaS Dashboard",
+    description: "FinFlow is a modern SaaS dashboard designed to help businesses monitor performance, analyze data, and make smarter decisions through a clean, intuitive, and user-centered interface.",
+    category: "Product Design",
+    client: "FinFlow Inc.",
+    startDate: "July 10, 2025",
+    endDate: "October 20, 2025",
+    challenge: "The existing platform suffered from a cluttered interface, inconsistent navigation, and poor data visualization. Users found it difficult to locate important information, resulting in a frustrating experience and reduced productivity. The existing platform suffered from a cluttered interface, inconsistent navigation, and poor data visualization. Users found it difficult to locate important information, resulting in a frustrating experience and reduced productivity.",
+    solution: "We redesigned the platform with a user-first approach by introducing a scalable design system, streamlined navigation, improved dashboard layouts, and clear data visualization. Every interaction was carefully crafted to enhance usability while maintaining a modern and professional appearance. We redesigned the platform with a user-first approach by introducing a scalable design system, streamlined navigation, improved dashboard layouts, and clear data visualization. Every interaction was carefully crafted to enhance usability while maintaining a modern and professional appearance.",
+    features: [
+      "Modern & Minimal Dashboard",
+      "Responsive Design",
+      "Advanced Analytics Widgets",
+      "Dark & Light Mode",
+      "Interactive Charts",
+      "Smart Data Visualization",
+      "User Management",
+      "Notification Center",
+      "Custom Reports",
+      "Design System Components"
+    ],
+    images: {
+      hero: "/assets/img/work/work-details1.webp",
+      gallery1: "/assets/img/work/work-details2.webp",
+      gallery2: "/assets/img/work/work-details3.webp",
+      gallery3: "/assets/img/work/work-details4.webp",
+      bottom: "/assets/img/work/work-details5.webp"
+    }
+  },
+  2: {
+    title: "Aura Brand Identity & Web Platform",
+    description: "Aura is a digital-first lifestyle brand. We developed their visual identity, brand guidelines, and a high-performance web platform that captures their premium, minimalist aesthetic.",
+    category: "Branding & Web",
+    client: "Aura Labs",
+    startDate: "November 01, 2025",
+    endDate: "January 15, 2026",
+    challenge: "Aura lacked a cohesive digital signature across their touchpoints. Their branding felt outdated, and the web performance lagged, resulting in high bounce rates and low digital engagement from premium customers. Aura lacked a cohesive digital signature across their touchpoints. Their branding felt outdated, and the web performance lagged, resulting in high bounce rates and low digital engagement from premium customers.",
+    solution: "We created a flexible brand system built around modern typography, organic motion design, and a content-focused web experience. Using high-speed modern technologies, we reduced page loading speed by 60% and raised user conversions. We created a flexible brand system built around modern typography, organic motion design, and a content-focused web experience. Using high-speed modern technologies, we reduced page loading speed by 60% and raised user conversions.",
+    features: [
+      "Minimal Brand System",
+      "Custom Grid Layouts",
+      "Liquid Transition Effects",
+      "Next-Gen Typography",
+      "Highly Optimized Assets",
+      "Responsive Brand Assets",
+      "Optimized Core Web Vitals",
+      "Flexible Layout Blocks",
+      "Modern Digital Guidelines",
+      "Fluid Animation Systems"
+    ],
+    images: {
+      hero: "/assets/img/work/work-details1.webp",
+      gallery1: "/assets/img/work/work-details2.webp",
+      gallery2: "/assets/img/work/work-details3.webp",
+      gallery3: "/assets/img/work/work-details4.webp",
+      bottom: "/assets/img/work/work-details5.webp"
+    }
+  },
+  3: {
+    title: "NEWME Luxury Fashion Editorial Magazine",
+    description: "A stunning lifestyle publication blending high fashion with interactive digital storytelling. We directed the aesthetic tone, photography styling, and layout typography.",
+    category: "Creative Direction",
+    client: "NEWME Studio",
+    startDate: "February 15, 2026",
+    endDate: "April 30, 2026",
+    challenge: "Traditional fashion magazines struggle to translate their tactile, luxurious print layouts into digital forms. Screen experiences often feel flat, losing the editorial rhythm and typographic expression of paper print. Traditional fashion magazines struggle to translate their tactile, luxurious print layouts into digital forms. Screen experiences often feel flat, losing the editorial rhythm and typographic expression of paper print.",
+    solution: "We designed an interactive editorial experience utilizing large images, dynamic viewport grids, and micro-animations that mirror the act of turning premium magazine pages. Typography changes dynamically to keep layouts organic. We designed an interactive editorial experience utilizing large images, dynamic viewport grids, and micro-animations that mirror the act of turning premium magazine pages. Typography changes dynamically to keep layouts organic.",
+    features: [
+      "Luxury Editorial Grid",
+      "Staggered Image Parallax",
+      "Dynamic Typographic Scales",
+      "Custom Photography Art Direction",
+      "Interactive Layout Fills",
+      "Editorial Storyboards",
+      "Smooth Viewport Snapping",
+      "Aesthetic Monocle Views",
+      "Print-to-Digital Transitions",
+      "Staggered Text Segments"
+    ],
+    images: {
+      hero: "/assets/img/work/work-details1.webp",
+      gallery1: "/assets/img/work/work-details2.webp",
+      gallery2: "/assets/img/work/work-details3.webp",
+      gallery3: "/assets/img/work/work-details4.webp",
+      bottom: "/assets/img/work/work-details5.webp"
+    }
+  },
+  4: {
+    title: "Nova Corp Identity Stationery Mockups",
+    description: "A complete physical and digital brand identity package designed for a progressive financial institution. Includes logos, cards, systems, and customized textures.",
+    category: "Brand Systems",
+    client: "Nova Capital",
+    startDate: "May 01, 2026",
+    endDate: "June 10, 2026",
+    challenge: "Corporate identity systems often feel cold, repetitive, and distant. Nova Corp needed to express trust and stability while standing out as a forward-thinking, modern investment platform for new-age portfolios. Corporate identity systems often feel cold, repetitive, and distant. Nova Corp needed to express trust and stability while standing out as a forward-thinking, modern investment platform for new-age portfolios.",
+    solution: "We structured a clean, modernist identity using deep monochromatic colors, crisp geometric shapes, and premium physical print mockups. Every asset, from cards to digital UI, shares the same mathematical grid rules. We structured a clean, modernist identity using deep monochromatic colors, crisp geometric shapes, and premium physical print mockups. Every asset, from cards to digital UI, shares the same mathematical grid rules.",
+    features: [
+      "Stationery Print Systems",
+      "Mathematical Brand Grids",
+      "Monochromatic Style Guides",
+      "Geometric Logo Layouts",
+      "Physical Stamp Elements",
+      "Corporate Assets Directory",
+      "Custom Monogram Assets",
+      "Digital Presentation Decks",
+      "Minimal Vector Elements",
+      "Scalable Vector Layouts"
+    ],
+    images: {
+      hero: "/assets/img/work/work-details1.webp",
+      gallery1: "/assets/img/work/work-details2.webp",
+      gallery2: "/assets/img/work/work-details3.webp",
+      gallery3: "/assets/img/work/work-details4.webp",
+      bottom: "/assets/img/work/work-details5.webp"
+    }
+  },
+  5: {
+    title: "Omni Fintech Mobile App Architecture",
+    description: "A cross-platform financial application facilitating seamless instant transfers, smart automated budgeting, and micro-investment tools in a simple tap.",
+    category: "UI/UX Strategy",
+    client: "Omni Pay",
+    startDate: "June 15, 2026",
+    endDate: "Present",
+    challenge: "Most fintech applications overload the user with complex statistical charts, confusing terms, and multi-step transfer interfaces, creating transactional friction and user anxiety. Most fintech applications overload the user with complex statistical charts, confusing terms, and multi-step transfer interfaces, creating transactional friction and user anxiety.",
+    solution: "We designed a single-screen transaction dashboard that utilizes natural conversational cues, smart shortcuts, and highly readable, simple color codes to manage finances effortlessly and stress-free. We designed a single-screen transaction dashboard that utilizes natural conversational cues, smart shortcuts, and highly readable, simple color codes to manage finances effortlessly and stress-free.",
+    features: [
+      "Conversational Interface",
+      "One-Tap Instant Transfer",
+      "Automatic Micro-Investments",
+      "Damped Biometric Security",
+      "Dynamic Spending Forecasts",
+      "Custom Budgeting Wizards",
+      "Instant Support Channels",
+      "Personal Ledger Systems",
+      "Monitored Account Limits",
+      "Encrypted Cloud Backups"
+    ],
+    images: {
+      hero: "/assets/img/work/work-details1.webp",
+      gallery1: "/assets/img/work/work-details2.webp",
+      gallery2: "/assets/img/work/work-details3.webp",
+      gallery3: "/assets/img/work/work-details4.webp",
+      bottom: "/assets/img/work/work-details5.webp"
+    }
+  }
+};
+
 export default function WorkDetailsPage({ params }: WorkDetailsProps) {
-  use(params);
+  const { id } = use(params);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const projectId = parseInt(id) || 1;
+  const project = projectDetails[projectId] || projectDetails[1];
 
   useGSAP(() => {
     if (!containerRef.current) return;
@@ -201,8 +353,8 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
       <Navbar />
 
       <Breadcrumb
-        title="Modern SaaS Dashboard for Business Analytics"
-        description="FinFlow is a modern SaaS dashboard designed to help businesses monitor performance, analyze data, and make smarter decisions through a clean, intuitive, and user-centered interface."
+        title={project.title}
+        description={project.description}
         paths={[
           { name: "Home", href: "/" },
           { name: "Work", href: "/work" },
@@ -218,12 +370,13 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
           <div className="relative w-full aspect-[1320/554] overflow-hidden bg-zinc-900 rounded-[4px] hero-image-wrapper">
             <div className="absolute inset-0 w-full h-[120%] top-[-10%] left-0 parallax-wrapper">
               <Image
-                src="/assets/img/work/work-details1.webp"
-                alt="Modern SaaS Dashboard Hero"
+                src={project.images.hero}
+                alt={project.title}
                 fill
                 sizes="(max-width: 1280px) 100vw, 1320px"
                 className="object-cover w-full h-full hover-image"
                 priority
+                unoptimized
               />
             </div>
           </div>
@@ -231,19 +384,19 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
           <div className="flex flex-wrap lg:flex-row justify-between gap-6 md:gap-8 items-center py-6 border-b border-zinc-850">
             <div className="flex items-center gap-2">
               <span className="text-neutral-400 text-base md:text-lg font-semibold uppercase tracking-tight">Category:</span>
-              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">UI/UX Design</span>
+              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">{project.category}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-neutral-400 text-base md:text-lg font-semibold uppercase tracking-tight">Client:</span>
-              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">FinFlow Inc.</span>
+              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">{project.client}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-neutral-400 text-base md:text-lg font-semibold uppercase tracking-tight">Start Date:</span>
-              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">July 10, 2025</span>
+              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">{project.startDate}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-neutral-400 text-base md:text-lg font-semibold uppercase tracking-tight">End Date:</span>
-              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">July 10, 2026</span>
+              <span className="text-stone-100 text-base md:text-lg font-semibold uppercase tracking-tight">{project.endDate}</span>
             </div>
           </div>
         </div>
@@ -260,7 +413,7 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
               ))}
             </h2>
             <p className="text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-relaxed md:leading-8">
-              The existing platform suffered from a cluttered interface, inconsistent navigation, and poor data visualization. Users found it difficult to locate important information, resulting in a frustrating experience and reduced productivity. The existing platform suffered from a cluttered interface, inconsistent navigation, and poor data visualization. Users found it difficult to locate important information, resulting in a frustrating experience and reduced productivity.
+              {project.challenge}
             </p>
           </div>
 
@@ -275,7 +428,7 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
               ))}
             </h2>
             <p className="text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-relaxed md:leading-8">
-              We redesigned the platform with a user-first approach by introducing a scalable design system, streamlined navigation, improved dashboard layouts, and clear data visualization. Every interaction was carefully crafted to enhance usability while maintaining a modern and professional appearance. We redesigned the platform with a user-first approach by introducing a scalable design system, streamlined navigation, improved dashboard layouts, and clear data visualization. Every interaction was carefully crafted to enhance usability while maintaining a modern and professional appearance.
+              {project.solution}
             </p>
           </div>
 
@@ -290,16 +443,11 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
               ))}
             </h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-normal list-disc list-inside">
-              <li className="feature-item">Modern &amp; Minimal Dashboard</li>
-              <li className="feature-item">Responsive Design</li>
-              <li className="feature-item">Advanced Analytics Widgets</li>
-              <li className="feature-item">Dark &amp; Light Mode</li>
-              <li className="feature-item">Interactive Charts</li>
-              <li className="feature-item">Smart Data Visualization</li>
-              <li className="feature-item">User Management</li>
-              <li className="feature-item">Notification Center</li>
-              <li className="feature-item">Custom Reports</li>
-              <li className="feature-item">Design System Components</li>
+              {project.features.map((feature, i) => (
+                <li key={i} className="feature-item">
+                  {feature}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -309,11 +457,12 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
             <div className="md:col-span-3 aspect-[312/320] relative overflow-hidden bg-zinc-900 rounded-[4px] gallery-wrapper">
               <div className="absolute inset-0 w-full h-[120%] top-[-10%] left-0 parallax-wrapper">
                 <Image
-                  src="/assets/img/work/work-details2.webp"
-                  alt="SaaS Analytics View"
+                  src={project.images.gallery1}
+                  alt={project.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 312px"
                   className="object-cover w-full h-full hover-image"
+                  unoptimized
                 />
               </div>
             </div>
@@ -321,11 +470,12 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
             <div className="md:col-span-6 aspect-[616/320] relative overflow-hidden bg-zinc-900 rounded-[4px] gallery-wrapper">
               <div className="absolute inset-0 w-full h-[120%] top-[-10%] left-0 parallax-wrapper">
                 <Image
-                  src="/assets/img/work/work-details3.webp"
-                  alt="Mockup Presentation"
+                  src={project.images.gallery2}
+                  alt={project.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 616px"
                   className="object-cover w-full h-full hover-image"
+                  unoptimized
                 />
               </div>
             </div>
@@ -333,11 +483,12 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
             <div className="md:col-span-3 aspect-[311/320] relative overflow-hidden bg-zinc-900 rounded-[4px] gallery-wrapper">
               <div className="absolute inset-0 w-full h-[120%] top-[-10%] left-0 parallax-wrapper">
                 <Image
-                  src="/assets/img/work/work-details4.webp"
-                  alt="Team Collaboration"
+                  src={project.images.gallery3}
+                  alt={project.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 311px"
                   className="object-cover w-full h-full hover-image"
+                  unoptimized
                 />
               </div>
             </div>
@@ -346,11 +497,12 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
           <div className="relative w-full aspect-[1320/600] overflow-hidden bg-zinc-900 rounded-[4px] bottom-image-wrapper">
             <div className="absolute inset-0 w-full h-[120%] top-[-10%] left-0 parallax-wrapper">
               <Image
-                src="/assets/img/work/work-details5.webp"
-                alt="Workspace Design System"
+                src={project.images.bottom}
+                alt={project.title}
                 fill
                 sizes="(max-width: 1280px) 100vw, 1320px"
                 className="object-cover w-full h-full hover-image"
+                unoptimized
               />
             </div>
           </div>

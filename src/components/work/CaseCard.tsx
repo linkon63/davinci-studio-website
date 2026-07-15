@@ -20,6 +20,7 @@ export default function CaseCard({ item, priority = false }: CaseCardProps) {
             sizes={item.sizes}
             className="hover-image object-cover w-full h-full"
             priority={priority}
+            unoptimized
           />
         </div>
       </div>

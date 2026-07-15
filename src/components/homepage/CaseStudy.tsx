@@ -142,12 +142,11 @@ export default function CaseStudyGallery() {
   return (
     <div ref={container} className=" flex flex-col font-proxima">
       {/* Case Studies Section */}
-      <main className="flex flex-col gap-16">
+      <main className="flex flex-col gap-8 md:gap-12 lg:gap-16">
         {/* Row 1: Side by Side (Tablet & Laptop) */}
         {cases.length >= 2 && (
-          <div className="flex flex-row items-start justify-between gap-12 w-full">
-            {/* Card 1: Smaller Column (w-[480px] equivalent) */}
-            <div ref={card1Ref} className="case-card-1 cursor-pointer w-full max-w-[480px] flex flex-col gap-6">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-12 w-full">
+            <div ref={card1Ref} className="case-card-1 cursor-pointer w-full lg:max-w-[480px] flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[0].aspectRatio)}>
                 <Image
                   src={cases[0].image}
@@ -163,14 +162,14 @@ export default function CaseStudyGallery() {
                   <span>{cases[0].category}</span>
                   <span>/{cases[0].year}</span>
                 </div>
-                <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                   {cases[0].title}
                 </h3>
               </div>
             </div>
 
             {/* Card 2: Larger Column (w-[700px] equivalent) */}
-            <div ref={card2Ref} className="case-card-2 cursor-pointer w-full max-w-[700px] flex flex-col gap-6">
+            <div ref={card2Ref} className="case-card-2 cursor-pointer w-full lg:max-w-[700px] flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[1].aspectRatio)}>
                 <Image
                   src={cases[1].image}
@@ -186,7 +185,7 @@ export default function CaseStudyGallery() {
                   <span>{cases[1].category}</span>
                   <span>/{cases[1].year}</span>
                 </div>
-                <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                   {cases[1].title}
                 </h3>
               </div>
@@ -212,7 +211,7 @@ export default function CaseStudyGallery() {
                   <span>{cases[2].category}</span>
                   <span>/{cases[2].year}</span>
                 </div>
-                <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                   {cases[2].title}
                 </h3>
               </div>
@@ -222,8 +221,7 @@ export default function CaseStudyGallery() {
 
         {/* Row 3: Side by Side (A4 Mockups & Office People, equal widths w-[1320px] total) */}
         {cases.length >= 5 && (
-          <div className="flex flex-row items-start justify-between gap-12 w-full">
-            {/* Card 4: Left Column (flex-1) */}
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-8 lg:gap-12 w-full">
             <div ref={card4Ref} className="case-card-4 cursor-pointer w-full flex-1 flex flex-col gap-6">
               <div className={cn("relative w-full overflow-hidden bg-zinc-900", cases[3].aspectRatio)}>
                 <Image
@@ -239,7 +237,7 @@ export default function CaseStudyGallery() {
                   <span>{cases[3].category}</span>
                   <span>/{cases[3].year}</span>
                 </div>
-                <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                   {cases[3].title}
                 </h3>
               </div>
@@ -261,7 +259,7 @@ export default function CaseStudyGallery() {
                   <span>{cases[4].category}</span>
                   <span>/{cases[4].year}</span>
                 </div>
-                <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                   {cases[4].title}
                 </h3>
               </div>
@@ -288,7 +286,7 @@ export default function CaseStudyGallery() {
                     <span>{extraCase.category}</span>
                     <span>/{extraCase.year}</span>
                   </div>
-                  <h3 className="text-primary-color text-[32px] font-semibold leading-tight">
+                  <h3 className="text-primary-color text-[24px] md:text-[28px] lg:text-[32px] font-semibold leading-tight">
                     {extraCase.title}
                   </h3>
                 </div>
@@ -297,7 +295,7 @@ export default function CaseStudyGallery() {
           </div>
         )}
 
-        <div className="w-full flex justify-center pt-12">
+        <div className="w-full flex justify-center pt-8 md:pt-12">
           <Link
             href="/case-studies"
             className="group flex items-center gap-4 py-2 border-b-2 border-black text-black text-lg font-semibold font-proxima uppercase hover:text-recording-red tracking-[0.02em] transition-all duration-300"

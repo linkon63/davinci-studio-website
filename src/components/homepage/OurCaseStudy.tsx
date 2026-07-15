@@ -40,11 +40,11 @@ export default function OurCaseStudy() {
     }, { scope: container });
 
     return (
-        <div ref={container} className="py-30">
+        <div ref={container} className="py-16 md:py-24 lg:py-30">
             <div className="container font-proxima">
                 <h2
                     id="caseStudyTitle"
-                    className="text-[80px] font-bold mb-8 uppercase text-center overflow-hidden"
+                    className="text-[32px] md:text-[48px] lg:text-[80px] font-bold mb-4 md:mb-8 uppercase text-center overflow-hidden"
                 >
                     OUR CASE STUDY
                 </h2>

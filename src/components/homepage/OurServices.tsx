@@ -1,4 +1,12 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const services = [
     {
@@ -34,62 +42,128 @@ const services = [
 ];
 
 export default function OurServices() {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const mm = gsap.matchMedia();
+
+        mm.add(
+            {
+                isMobile: "(max-width: 1023px)",
+                isTablet: "(min-width: 1024px) and (max-width: 1279px)",
+                isDesktop: "(min-width: 1280px) and (max-width: 1535px)",
+                isLargeDesktop: "(min-width: 1536px)",
+            },
+            (context) => {
+                const { isMobile, isTablet, isDesktop, isLargeDesktop } =
+                    context.conditions as any;
+
+                const endValue = isMobile
+                    ? "bottom 100%"
+                    : isTablet
+                        ? "bottom 80%"
+                        : isDesktop
+                            ? "bottom 60%"
+                            : "bottom 60%";
+
+                const cards = gsap.utils.toArray(".service-card") as any;
+                cards.forEach((card:any) => {
+                    ScrollTrigger.create({
+                        trigger: card,
+                        start: "top top+=60",
+                        endTrigger: sectionRef.current,
+                        end: endValue,
+                        pin: true,
+                        pinSpacing: false,
+                        scrub: true,
+                    });
+                });
+            }
+        );
+
+        return () => {
+            mm.revert();
+        };
+    }, []);
+
+    useEffect(() => {
+        const text = new SplitType("#ourServiceTitle", { types: "chars" });
+
+        const tl = gsap.timeline({ paused: true });
+        tl.from(text.chars, {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.03,
+            ease: "power1.out",
+        });
+
+        ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top 70%",
+            onEnter: () => tl.play(),
+        });
+
+        ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: "top 40%",
+            onLeaveBack: () => tl.reverse(),
+        });
+
+        return () => {
+            tl.kill();
+        };
+    }, []);
+
     return (
-        <section className="bg-primary-color text-white-color py-30 font-proxima">
-            <div className="container">
-                <h2 className="text-[80px] font-bold mb-12">OUR SERVICE</h2>
+        <section 
+            ref={sectionRef} 
+            className="bg-primary-color text-white-color py-15 sm:py-20 md:py-30 font-proxima min-h-screen"
+        >
+            <div className="container mx-auto px-4">
+                <h2 id="ourServiceTitle" className="text-[36px] sm:text-[48px] md:text-[64px] lg:text-[80px] font-bold mb-10 md:mb-20 overflow-hidden">OUR SERVICE</h2>
 
-                <div className="">
+                {/* Service Container */}
+                <div className="flex flex-col gap-10">
                     {services.map((service, index) => (
-                        <div key={service.id}>
-                            <div key={service.id} className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-
+                        <div 
+                            key={service.id} 
+                            className="service-card bg-primary-color py-10"
+                        >
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                                 {/* ID & Title */}
                                 <div className="md:col-span-3 flex flex-col justify-between h-full">
-                                    <span className="text-[32px] font-semibold">{service.id}</span>
-                                    <h3 className="text-[46px] font-semibold">
+                                    <span className="text-[24px] sm:text-[28px] md:text-[32px] font-semibold">{service.id}</span>
+                                    <h3 className="text-[28px] sm:text-[36px] md:text-[46px] font-semibold leading-tight whitespace-pre-line">
                                         {service.title}
                                     </h3>
                                 </div>
 
                                 {/* Image */}
-                                <div className="md:col-span-4 relative h-[380px] w-full">
+                                <div className="md:col-span-4 relative h-[240px] sm:h-[300px] md:h-[380px] w-full">
                                     <Image
                                         src={service.image}
                                         alt={service.id}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover rounded-lg"
                                     />
                                 </div>
 
                                 {/* Items */}
-                                <div className="md:col-span-5 space-y-10">
+                                <div className="md:col-span-5 space-y-4 md:space-y-10">
                                     {service.items.map((item, idx) => (
                                         <div key={idx} className="group cursor-pointer space-y-2">
-                                            <h4 className="text-2xl font-semibold group-hover:text-recording-red transition-colors">
+                                            <h4 className="text-lg md:text-2xl font-semibold group-hover:text-recording-red transition-colors">
                                                 {item.title}
                                             </h4>
-                                            <p className="text-body-color font-montserrat text-base leading-relaxed max-w-md">
+                                            <p className="text-body-color font-montserrat text-sm md:text-base leading-relaxed max-w-md">
                                                 {item.desc}
                                             </p>
                                         </div>
                                     ))}
                                 </div>
-
-
-
-
                             </div>
-                            {/* Horizontal Line */}
-
-                            {index !== services.length - 1 && (
-                                <div className="py-15">
-                                    <div className="w-full h-[1px] bg-zinc-800"></div>
-                                </div>
-                            )}
-
                         </div>
-
                     ))}
                 </div>
             </div>

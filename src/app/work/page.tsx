@@ -148,6 +148,7 @@ export default function WorkPage() {
       cards.forEach((card, index) => {
         const img = card.querySelector(".hover-image");
         const wrapper = card.querySelector(".parallax-wrapper");
+        const titleWords = card.querySelectorAll(".case-title-word");
 
         card.setAttribute("data-initialized", "true");
 
@@ -186,6 +187,25 @@ export default function WorkPage() {
                 start: "top bottom",
                 end: "bottom top",
                 scrub: true,
+              },
+            }
+          );
+        }
+
+        if (titleWords.length > 0) {
+          gsap.fromTo(
+            titleWords,
+            { yPercent: 100, opacity: 0 },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.05,
+              ease: "power4.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                toggleActions: "play none none none",
               },
             }
           );
@@ -249,16 +269,16 @@ export default function WorkPage() {
             const x = mouseEvent.clientX - rect.left;
             const y = mouseEvent.clientY - rect.top;
 
-            const xPercent = (x / rect.width - 0.5) * 8;
-            const yPercent = (y / rect.height - 0.5) * 8;
+            const xNorm = (x / rect.width - 0.5);
+            const yNorm = (y / rect.height - 0.5);
 
             gsap.to(img, {
-              xPercent: xPercent,
-              yPercent: yPercent,
+              xPercent: -xNorm * 4,
+              yPercent: -yNorm * 4,
               scale: 1.08,
+              ease: "power3.out",
+              duration: 0.8,
               overwrite: "auto",
-              duration: 0.45,
-              ease: "power2.out",
             });
           };
 
@@ -267,9 +287,9 @@ export default function WorkPage() {
               xPercent: 0,
               yPercent: 0,
               scale: 1,
-              overwrite: "auto",
-              duration: 0.6,
               ease: "power3.out",
+              duration: 0.8,
+              overwrite: "auto",
             });
           };
 

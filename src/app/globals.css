@@ -153,6 +153,17 @@
   font-weight: var(--h2-weight);
 }
 
+@layer utilities {
+  .reveal-text {
+    background: linear-gradient(to right, #F4F4EA 50%, #464646 50%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 @utility h3 {
   font-size: var(--h3-size);
   line-height: var(--h3-lh);
@@ -203,6 +214,7 @@
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
 
 /* ---- Coming soon animations ---- */
 @keyframes text-shimmer {
@@ -275,6 +287,15 @@
 
 .animate-float-slow {
   animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-logo-scroll {
+  animation: logo-scroll 20s linear infinite;
+}
+
+@keyframes logo-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

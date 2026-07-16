@@ -59,7 +59,7 @@ export default function Footer() {
                             </div>
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold font-proxima uppercase text-white-color">
+                        <h1 className="text-[28px] sm:text-5xl md:text-7xl font-bold font-proxima uppercase text-white-color">
                             LET&apos;S JOIN WITH US
                         </h1>
 
@@ -135,7 +135,7 @@ export default function Footer() {
                         <ul className="space-y-3 md:space-y-4 text-gray-400">
                             {["About Us", "Contact Us", "FAQs", "Blog", "Support"].map((item) => (
                                 <li key={item} className="group cursor-pointer">
-                                    <span className="block text-white-color text-xl md:text-[32px] font-semibold transition-all duration-300 group-hover:text-recording-red group-hover:translate-x-4">
+                                    <span className="block text-white-color text-lg md:text-[32px] font-semibold transition-all duration-300 group-hover:text-recording-red group-hover:translate-x-4">
                                         {item}
                                     </span>
                                 </li>
@@ -146,7 +146,7 @@ export default function Footer() {
                     {/* Contact Us */}
                     <div>
                         <h3 className="text-lg md:text-xl font-semibold text-body-color mb-4 md:mb-6">Contact Us</h3>
-                        <ul className="space-y-3 md:space-y-4 text-white-color text-xl md:text-[32px] font-semibold">
+                        <ul className="space-y-3 md:space-y-4 text-white-color text-lg md:text-[32px] font-semibold">
                             <li className="break-all">Gareeb-e-Nawaz Ave, Sector 11, Uttara, Dhaka - 1230</li>
                             <li className="break-all">+880 1865 94 21 83</li>
                             <li className="break-all">contact@davincymedia.com</li>
@@ -163,7 +163,7 @@ export default function Footer() {
 
             </section>
             {/* Copyright */}
-            <div className="font-proxima bg-secondary-dark text-center text-white-color text-sm md:text-xl pt-3 pb-2">
+            <div className="font-proxima bg-secondary-dark text-center text-white-color text-sm md:text-base pt-3 pb-2">
                 @ {new Date().getFullYear()} Da Vinci Media. All rights reserved.
             </div>
         </footer>

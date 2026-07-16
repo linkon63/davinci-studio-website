@@ -15,7 +15,7 @@ export default function WhoWeAre() {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 80%",
+                start: "top 70%",
             },
         });
 

@@ -15,8 +15,8 @@ export default function AboutDescription() {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 10%",
-                end: "center center",
+                start: "top 30%",
+                end: "bottom center",
                 scrub: 2,
             },
         });

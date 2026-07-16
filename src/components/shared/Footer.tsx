@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import FooterCTA from "../footer/FooterCTA";
 import FooterColumns from "../footer/FooterColumns";
 import FooterBranding from "../footer/FooterBranding";
@@ -27,7 +28,7 @@ export default function Footer() {
       const heroSocials = footerRef.current.querySelector(".footer-social-links");
       const heroJourney = footerRef.current.querySelector(".footer-journey-btn");
 
-      const heroElements = [heroSub, heroTitle, heroDesc, heroSocials, heroJourney].filter(Boolean);
+      const heroElements = [heroSub, heroDesc, heroSocials, heroJourney].filter(Boolean);
 
       if (heroElements.length > 0) {
         gsap.fromTo(
@@ -46,6 +47,23 @@ export default function Footer() {
             },
           }
         );
+      }
+
+      let ctaTitleText: SplitType | null = null;
+      if (!prefersReduced && heroTitle) {
+        ctaTitleText = new SplitType(heroTitle as HTMLElement, { types: "chars" });
+        gsap.from(ctaTitleText.chars, {
+          x: 50,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.03,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: heroTitle,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          }
+        });
       }
 
       // 2. Columns Entrance
@@ -236,6 +254,12 @@ export default function Footer() {
           });
         }
       }
+
+      return () => {
+        if (ctaTitleText) {
+          ctaTitleText.revert();
+        }
+      };
     },
     { scope: footerRef }
   );

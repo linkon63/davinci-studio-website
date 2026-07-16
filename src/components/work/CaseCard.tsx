@@ -29,14 +29,8 @@ export default function CaseCard({ item, priority = false }: CaseCardProps) {
           <span>{item.category}</span>
           <span>/{item.year}</span>
         </div>
-        <h3 className="text-white-color text-2xl md:text-3xl font-semibold leading-tight md:leading-9 transition-colors group-hover:text-recording-red flex flex-wrap gap-x-2 overflow-hidden py-0.5">
-          {item.title.split(" ").map((word, i) => (
-            <span key={i} className="inline-flex overflow-hidden">
-              <span className="case-title-word inline-block">
-                {word}
-              </span>
-            </span>
-          ))}
+        <h3 className="case-title text-white-color text-2xl md:text-3xl font-semibold leading-tight md:leading-9 transition-colors group-hover:text-recording-red overflow-hidden py-0.5">
+          {item.title}
         </h3>
       </div>
     </Link>

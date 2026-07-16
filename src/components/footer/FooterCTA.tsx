@@ -28,7 +28,7 @@ export default function FooterCTA() {
             </div>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold font-proxima uppercase text-white-color footer-hero-title opacity-0">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold font-proxima uppercase text-white-color footer-hero-title">
             LET&apos;S JOIN WITH US
           </h1>
 

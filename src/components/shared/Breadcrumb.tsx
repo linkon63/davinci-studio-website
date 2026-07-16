@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import SplitType from "split-type";
 import { BreadcrumbPath } from "@/types/common";
 
 interface BreadcrumbProps {
@@ -21,30 +22,42 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
   useGSAP(() => {
     if (!breadcrumbRef.current) return;
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) return;
+    let titleText: SplitType | null = null;
 
-    const titleWords = breadcrumbRef.current.querySelectorAll(".breadcrumb-title-word");
     const descEl = breadcrumbRef.current.querySelector("p");
     const lineEl = breadcrumbRef.current.querySelector(".lg\\:block");
     const navEl = breadcrumbRef.current.querySelector("nav");
 
     const tl = gsap.timeline();
 
-    if (titleWords.length > 0) {
-      tl.fromTo(
-        titleWords,
-        { opacity: 0, yPercent: 100 },
-        { opacity: 1, yPercent: 0, duration: 0.8, stagger: 0.15, ease: "power4.out" }
-      );
+    if (!prefersReduced) {
+      const titleEl = breadcrumbRef.current.querySelector("#breadcrumb-title");
+      if (titleEl) {
+        titleText = new SplitType(titleEl as HTMLElement, { types: "chars" });
+        if (titleText.chars && titleText.chars.length > 0) {
+          tl.fromTo(
+            titleText.chars,
+            { opacity: 0, x: 50 },
+            { opacity: 1, x: 0, duration: 1, stagger: 0.03, ease: "power1.out" }
+          );
+        }
+      }
     }
+
     if (descEl || lineEl || navEl) {
       tl.fromTo(
         [descEl, lineEl, navEl].filter(Boolean),
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" },
-        "-=0.4"
+        "-=0.6"
       );
     }
+
+    return () => {
+      if (titleText) {
+        titleText.revert();
+      }
+    };
   }, { scope: breadcrumbRef });
 
   return (
@@ -76,14 +89,11 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col gap-6 md:gap-8">
-          <h1 className="text-white-color text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-proxima uppercase leading-tight tracking-tight flex flex-wrap gap-x-4 overflow-hidden py-1">
-            {title.split(" ").map((word, i) => (
-              <span key={i} className="inline-flex overflow-hidden">
-                <span className="breadcrumb-title-word inline-block">
-                  {word}
-                </span>
-              </span>
-            ))}
+          <h1
+            id="breadcrumb-title"
+            className="text-white-color text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-proxima uppercase leading-tight tracking-tight overflow-hidden py-1"
+          >
+            {title}
           </h1>
 
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 lg:gap-11">

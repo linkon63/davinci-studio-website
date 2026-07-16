@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import ServiceCard, { ServiceCardData } from "./ServiceCard";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -79,6 +80,8 @@ export default function ServiceList() {
       ).matches;
       if (prefersReduced) return;
 
+      const splitInstances: SplitType[] = [];
+
       // Animate each service card on scroll
       const cards = sectionRef.current.querySelectorAll(".service-card");
       cards.forEach((card) => {
@@ -88,8 +91,25 @@ export default function ServiceList() {
         const titleWords = card.querySelectorAll("h3");
         const idSpan = card.querySelector("span");
 
+        let idSplit: SplitType | null = null;
+        let titleSplit: SplitType | null = null;
+
+        if (idSpan) {
+          idSplit = new SplitType(idSpan as HTMLElement, { types: "chars" });
+          splitInstances.push(idSplit);
+        }
+        if (titleWords.length > 0) {
+          titleSplit = new SplitType(titleWords[0] as HTMLElement, { types: "chars" });
+          splitInstances.push(titleSplit);
+        }
+
         // Set initial states
-        gsap.set([idSpan, titleWords], { opacity: 0, y: 30 });
+        if (idSplit?.chars && titleSplit?.chars) {
+          gsap.set([idSpan, ...Array.from(titleWords)], { opacity: 1, y: 0 });
+          gsap.set([...Array.from(idSplit.chars), ...Array.from(titleSplit.chars)], { opacity: 0, x: 50 });
+        } else {
+          gsap.set([idSpan, titleWords], { opacity: 0, y: 30 });
+        }
         gsap.set(items, { opacity: 0, y: 20 });
 
         const cardTl = gsap.timeline({
@@ -101,16 +121,29 @@ export default function ServiceList() {
         });
 
         // 1. Text & ID reveals
-        cardTl.to(
-          [idSpan, titleWords],
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power3.out",
-          }
-        );
+        if (idSplit?.chars && titleSplit?.chars) {
+          cardTl.to(
+            [...Array.from(idSplit.chars), ...Array.from(titleSplit.chars)],
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1,
+              stagger: 0.02,
+              ease: "power1.out",
+            }
+          );
+        } else {
+          cardTl.to(
+            [idSpan, titleWords],
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: "power3.out",
+            }
+          );
+        }
 
         // 2. Image reveal (clip-path)
         if (imageWrapper && image) {
@@ -217,6 +250,10 @@ export default function ServiceList() {
           }
         );
       });
+
+      return () => {
+        splitInstances.forEach((inst) => inst.revert());
+      };
     },
     { scope: sectionRef }
   );

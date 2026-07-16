@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { use, useRef } from "react";
+import SplitType from "split-type";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
@@ -72,9 +73,11 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
         );
       }
 
+      const splitInstances: SplitType[] = [];
+
       const blocks = containerRef.current!.querySelectorAll(".detail-block");
       blocks.forEach((block) => {
-        const title = block.querySelector("h2");
+        const title = block.querySelector(".detail-title");
         const body = block.querySelector("p, ul");
 
         const blockTl = gsap.timeline({
@@ -86,18 +89,16 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
         });
 
         if (title) {
-          const titleWords = title.querySelectorAll(".detail-title-word");
-          if (titleWords.length > 0) {
-            blockTl.fromTo(titleWords,
-              { opacity: 0, yPercent: 100 },
-              { opacity: 1, yPercent: 0, duration: 0.8, stagger: 0.08, ease: "power4.out" }
-            );
-          } else {
-            blockTl.fromTo(title,
-              { opacity: 0, y: 30 },
-              { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-            );
-          }
+          const titleSplit = new SplitType(title as HTMLElement, { types: "chars" });
+          splitInstances.push(titleSplit);
+
+          blockTl.from(titleSplit.chars, {
+            x: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.03,
+            ease: "power1.out"
+          });
         }
         if (body) {
           const features = body.querySelectorAll(".feature-item");
@@ -196,6 +197,10 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
           }
         }
       });
+
+      return () => {
+        splitInstances.forEach((inst) => inst.revert());
+      };
     });
 
     return () => matchMedia.revert();
@@ -261,14 +266,8 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
         <div className="flex flex-col gap-12 md:gap-16 w-full text-section">
           {/* Concept Block */}
           <div className="flex flex-col gap-4 max-w-[1096px] detail-block">
-            <h2 className="text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase flex flex-wrap gap-x-3 overflow-hidden py-1">
-              {"The Concept".split(" ").map((word, i) => (
-                <span key={i} className="inline-flex overflow-hidden">
-                  <span className="detail-title-word inline-block">
-                    {word}
-                  </span>
-                </span>
-              ))}
+            <h2 className="detail-title text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase overflow-hidden py-1">
+              The Concept
             </h2>
             <p className="text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-relaxed md:leading-8">
               {blog.concept}
@@ -277,14 +276,8 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
 
           {/* Story Block */}
           <div className="flex flex-col gap-4 max-w-[1096px] detail-block">
-            <h2 className="text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase flex flex-wrap gap-x-3 overflow-hidden py-1">
-              {"The Story".split(" ").map((word, i) => (
-                <span key={i} className="inline-flex overflow-hidden">
-                  <span className="detail-title-word inline-block">
-                    {word}
-                  </span>
-                </span>
-              ))}
+            <h2 className="detail-title text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase overflow-hidden py-1">
+              The Story
             </h2>
             <p className="text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-relaxed md:leading-8">
               {blog.story}
@@ -293,14 +286,8 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
 
           {/* Key Takeaways Block */}
           <div className="flex flex-col gap-6 max-w-[1096px] detail-block">
-            <h2 className="text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase flex flex-wrap gap-x-3 overflow-hidden py-1">
-              {"Key Takeaways".split(" ").map((word, i) => (
-                <span key={i} className="inline-flex overflow-hidden">
-                  <span className="detail-title-word inline-block">
-                    {word}
-                  </span>
-                </span>
-              ))}
+            <h2 className="detail-title text-white text-3xl md:text-5xl font-semibold leading-tight tracking-tight uppercase overflow-hidden py-1">
+              Key Takeaways
             </h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 text-neutral-300 text-base md:text-lg lg:text-xl font-medium leading-normal list-disc list-inside">
               {blog.takeaways.map((takeaway, i) => (

@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useState } from "react";
+import SplitType from "split-type";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
@@ -93,14 +94,14 @@ export default function WorkPage() {
       isMobile: "(max-width: 1023px)",
     }, (context) => {
       const isDesktop = context.conditions?.isDesktop;
-      const cards = containerRef.current!.querySelectorAll(".case-card:not([data-initialized])");
+      const cards = containerRef.current!.querySelectorAll(".case-card");
+      const splitInstances: SplitType[] = [];
+      const cleanups: (() => void)[] = [];
 
       cards.forEach((card, index) => {
         const img = card.querySelector(".hover-image");
         const wrapper = card.querySelector(".parallax-wrapper");
-        const titleWords = card.querySelectorAll(".case-title-word");
-
-        card.setAttribute("data-initialized", "true");
+        const titleEl = card.querySelector(".case-title");
 
         if (wrapper && img) {
           gsap.set(wrapper, { clipPath: "inset(0 100% 0 0)" });
@@ -142,23 +143,22 @@ export default function WorkPage() {
           );
         }
 
-        if (titleWords.length > 0) {
-          gsap.fromTo(
-            titleWords,
-            { yPercent: 100, opacity: 0 },
-            {
-              yPercent: 0,
-              opacity: 1,
-              duration: 0.8,
-              stagger: 0.05,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 88%",
-                toggleActions: "play none none none",
-              },
-            }
-          );
+        if (titleEl) {
+          const titleSplit = new SplitType(titleEl as HTMLElement, { types: "chars" });
+          splitInstances.push(titleSplit);
+
+          gsap.from(titleSplit.chars, {
+            x: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.02,
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          });
         }
 
         if (isDesktop) {
@@ -245,9 +245,21 @@ export default function WorkPage() {
 
           card.addEventListener("mousemove", handleMouseMove);
           card.addEventListener("mouseleave", handleMouseLeave);
+
+          cleanups.push(() => {
+            card.removeEventListener("mousemove", handleMouseMove);
+            card.removeEventListener("mouseleave", handleMouseLeave);
+          });
         }
       });
+
+      return () => {
+        splitInstances.forEach((inst) => inst.revert());
+        cleanups.forEach((cleanup) => cleanup());
+      };
     });
+
+    ScrollTrigger.refresh();
 
     return () => matchMedia.revert();
   }, { dependencies: [cases], scope: containerRef });

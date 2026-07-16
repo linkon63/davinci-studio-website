@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
@@ -38,63 +39,100 @@ export default function CareerPage() {
         return;
       }
 
-      // Animate "Open Positions" heading
-      gsap.fromTo(
-        sectionRef.current.querySelector(".career-heading"),
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: "power3.out",
+      const splitInstances: SplitType[] = [];
+
+      // 1. "Open Positions" Heading character animation
+      const headingEl = sectionRef.current.querySelector(".career-heading");
+      let headingSplit: SplitType | null = null;
+      if (headingEl) {
+        headingSplit = new SplitType(headingEl as HTMLElement, { types: "chars" });
+        splitInstances.push(headingSplit);
+
+        gsap.from(headingSplit.chars, {
+          x: 50,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.03,
+          ease: "power1.out",
           scrollTrigger: {
-            trigger: sectionRef.current,
+            trigger: headingEl,
             start: "top 85%",
             toggleActions: "play none none none",
           },
-        }
-      );
-
-      // Stagger animate each job card
-      const jobs = sectionRef.current.querySelectorAll(".career-job");
-      if (jobs.length > 0) {
-        gsap.fromTo(
-          jobs,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: sectionRef.current.querySelector(".career-list"),
-              start: "top 80%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
+        });
       }
 
-      // Dividers fade in
+      // 2. Job Cards animations (characters of the title + fade-up details)
+      const jobs = sectionRef.current.querySelectorAll(".career-job");
+      jobs.forEach((jobCard) => {
+        const titleEl = jobCard.querySelector("h3");
+        const metaRow = jobCard.querySelector(".flex-wrap");
+        const descEl = jobCard.querySelector("p");
+        const applyBtn = jobCard.querySelector(".shrink-0");
+
+        let titleSplit: SplitType | null = null;
+        if (titleEl) {
+          titleSplit = new SplitType(titleEl as HTMLElement, { types: "chars" });
+          splitInstances.push(titleSplit);
+
+          gsap.from(titleSplit.chars, {
+            x: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.02,
+            ease: "power1.out",
+            scrollTrigger: {
+              trigger: jobCard,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          });
+        }
+
+        const cardDetails = [metaRow, descEl, applyBtn].filter(Boolean);
+        if (cardDetails.length > 0) {
+          gsap.fromTo(
+            cardDetails,
+            { opacity: 0, y: 25 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.1,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: jobCard,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+      });
+
+      // 3. Dividers scale animation
       const dividers = sectionRef.current.querySelectorAll(".career-divider");
-      if (dividers.length > 0) {
+      dividers.forEach((divider) => {
         gsap.fromTo(
-          dividers,
+          divider,
           { scaleX: 0 },
           {
             scaleX: 1,
-            duration: 0.6,
-            stagger: 0.15,
+            duration: 0.8,
             ease: "power2.out",
+            transformOrigin: "left center",
             scrollTrigger: {
-              trigger: sectionRef.current.querySelector(".career-list"),
-              start: "top 80%",
+              trigger: divider,
+              start: "top 90%",
               toggleActions: "play none none none",
             },
           }
         );
-      }
+      });
+
+      return () => {
+        splitInstances.forEach((inst) => inst.revert());
+      };
     },
     { scope: sectionRef }
   );

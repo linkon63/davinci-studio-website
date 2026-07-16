@@ -1,171 +1,257 @@
-"use client"
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import { FaBehance, FaDribbble, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+"use client";
 
-const socialLinks = [
-    { name: "FACEBOOK", icon: FaFacebookF, href: "#" },
-    { name: "BEHANCE", icon: FaBehance, href: "#" },
-    { name: "DRIBBBLE", icon: FaDribbble, href: "#" },
-    { name: "LINKEDIN", icon: FaLinkedinIn, href: "#" },
-];
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import FooterCTA from "../footer/FooterCTA";
+import FooterColumns from "../footer/FooterColumns";
+import FooterBranding from "../footer/FooterBranding";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
 
-    const footerRef = useRef<HTMLElement>(null);
+  useGSAP(
+    () => {
+      if (!footerRef.current) return;
+      const prefersReduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    useEffect(() => {
-        if (!footerRef.current) return;
+      // 1. Hero Content Entrance
+      const heroSub = footerRef.current.querySelector(".footer-hero-sub");
+      const heroTitle = footerRef.current.querySelector(".footer-hero-title");
+      const heroDesc = footerRef.current.querySelector(".footer-hero-desc");
+      const heroSocials = footerRef.current.querySelector(".footer-social-links");
+      const heroJourney = footerRef.current.querySelector(".footer-journey-btn");
 
-        const buttons = footerRef.current.querySelectorAll(".social-btn");
+      const heroElements = [heroSub, heroTitle, heroDesc, heroSocials, heroJourney].filter(Boolean);
 
-        buttons.forEach((btn: Element) => {
-            const redBg = btn.querySelector(".red-bg");
+      if (heroElements.length > 0) {
+        gsap.fromTo(
+          heroElements,
+          { opacity: 0, y: 45 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: footerRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
 
-            gsap.set(redBg, { yPercent: 100 });
+      // 2. Columns Entrance
+      const cols = footerRef.current.querySelectorAll(".footer-col");
+      if (cols.length > 0) {
+        gsap.fromTo(
+          cols,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: cols[0],
+              start: "top 92%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
 
-            const tl = gsap.timeline({ paused: true });
+      // 3. Social & Journey Button Waves (Horizontal flow + Hover timeline)
+      const buttons = footerRef.current.querySelectorAll(".social-btn");
+      buttons.forEach((btn) => {
+        const redBg = btn.querySelector(".red-bg");
+        const waveBack = btn.querySelector(".btn-wave-back");
+        const waveFront = btn.querySelector(".btn-wave-front");
 
-            tl.to(redBg, {
-                yPercent: 0,
-                duration: 0.4,
-                ease: "power3.out"
-            });
+        gsap.set(redBg, { yPercent: 65 });
 
-            btn.addEventListener("mouseenter", () => tl.play());
-            btn.addEventListener("mouseleave", () => tl.reverse());
+        const hoverTl = gsap.timeline({ paused: true });
+        hoverTl.to(redBg, {
+          yPercent: 0,
+          duration: 0.4,
+          ease: "power3.out",
         });
-    }, []);
 
-    return (
-        <footer ref={footerRef} className="bg-primary-color">
-            {/* Top Section */}
-            <section className="container mx-auto py-10 md:py-20">
-                <div className="mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-10 md:gap-0">
-                    <div className="max-w-[760px]">
-                        <div className="font-proxima flex gap-2 font-semibold text-white-color uppercase tracking-[0.02em] space-y-5">
-                            <h1 className="text-sm md:text-base">GET&apos;S STARTED A PROJECTS?</h1>
-                            <div className="relative w-[77px] h-[24px]">
-                                <Image
-                                    src="/assets/footer/arrow.svg"
-                                    alt="arrow"
-                                    fill
-                                    className="object-contain"
-                                    sizes="77px"
-                                />
-                            </div>
-                        </div>
+        if (waveBack && waveFront) {
+          gsap.set(waveFront, { xPercent: -50 });
 
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold font-proxima uppercase text-white-color">
-                            LET&apos;S JOIN WITH US
-                        </h1>
+          gsap.to(waveBack, {
+            xPercent: -50,
+            duration: 16,
+            ease: "none",
+            repeat: -1,
+          });
 
-                        <p className="font-montserrat text-sm md:text-base font-normal text-body-color mt-4 mb-10 md:mb-20">
-                            Da Vinci Media helps brands stand out with exceptional design,
-                            powerful websites, strategic marketing, and creative digital
-                            solutions.
-                        </p>
+          gsap.to(waveFront, {
+            xPercent: 0,
+            duration: 11,
+            ease: "none",
+            repeat: -1,
+          });
+        }
 
-                        <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-6 font-proxima ">
-                            {socialLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className="social-btn bg-secondary-dark relative overflow-hidden flex items-center gap-2 px-6 py-4 rounded-[999px] font-proxima font-semibold text-white-color"
-                                >
-                                    <div className="red-bg absolute inset-0 bg-recording-red "></div>
-                                    <link.icon className="w-5 h-5 relative z-10" />
-                                    <span className="relative z-10">{link.name}</span>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
+        btn.addEventListener("mouseenter", () => hoverTl.play());
+        btn.addEventListener("mouseleave", () => hoverTl.reverse());
+      });
 
-                    <div className="font-proxima font-semibold text-lg">
-                        <Link
-                            href="#"
-                            className="w-32 h-32 social-btn md:w-40 md:h-40 rounded-full text-white-color bg-secondary-dark relative overflow-hidden flex flex-col items-center justify-center text-center"
-                        >
-                            <div className="red-bg absolute inset-0 bg-recording-red"></div>
+      // 4. Large Branding Text Wave & Buoyant Lettering Animations
+      const waveBack = footerRef.current.querySelector(".wave-back");
+      const waveFront = footerRef.current.querySelector(".wave-front");
+      const wavesGroup = footerRef.current.querySelector(".waves-group");
+      const waveContainer = footerRef.current.querySelector(".wave-container");
 
-                            <div className="relative z-10 flex flex-col items-center">
-                                <ArrowUpRight className="w-6 h-6 md:w-8 md:h-8 mb-1" />
-                                <span className="text-xs md:text-sm font-bold leading-tight">
-                                    START THE
-                                    <br />
-                                    JOURNEY
-                                </span>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </section>
+      if (waveBack && waveFront && wavesGroup && waveContainer) {
+        gsap.set(waveBack, { x: 0 });
+        gsap.set(waveFront, { x: -1308 });
 
-            {/* Bottom Section */}
-            <section className="container mx-auto pt-10 md:pt-20 border-t border-zinc-800 font-proxima">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12">
+        gsap.to(waveBack, {
+          x: -1308,
+          duration: 15,
+          ease: "none",
+          repeat: -1,
+          force3D: true,
+        });
 
-                    {/* Logo & Newsletter */}
-                    <div className="col-span-1 md:col-span-2 max-w-[424px] space-y-5">
-                        <div>
-                            <Image src="/logo.jpg" alt="Da Vinci Media" width={158} height={100} />
-                        </div>
-                        <p className="text-body-color font-semibold text-base md:text-xl">
-                            Da Vinci Media helps brands stand out with exceptional design, powerful websites, strategic marketing, and creative digital solutions.
-                        </p>
-                        <div className="flex items-center bg-secondary-dark p-1">
-                            <input
-                                type="email"
-                                placeholder="Enter Your E-mail"
-                                className="bg-transparent text-white px-4 py-3 outline-none flex-grow min-w-0"
-                            />
-                            <div className="w-[1px] h-6 bg-body-color shrink-0"></div>
-                            <button className="bg-transparent text-white-color px-4 md:px-6 py-3 flex items-center gap-2 hover:text-recording-red cursor-pointer transition-colors whitespace-nowrap">
-                                SUBSCRIBE <span>&rarr;</span>
-                            </button>
-                        </div>
-                    </div>
+        gsap.to(waveFront, {
+          x: 0,
+          duration: 10,
+          ease: "none",
+          repeat: -1,
+          force3D: true,
+        });
 
-                    {/* Quick Access */}
-                    <div>
-                        <h3 className="text-lg md:text-xl font-semibold text-body-color mb-4 md:mb-6">Quick Access</h3>
-                        <ul className="space-y-3 md:space-y-4 text-gray-400">
-                            {["About Us", "Contact Us", "FAQs", "Blog", "Support"].map((item) => (
-                                <li key={item} className="group cursor-pointer">
-                                    <span className="block text-white-color text-xl md:text-[32px] font-semibold transition-all duration-300 group-hover:text-recording-red group-hover:translate-x-4">
-                                        {item}
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+        gsap.to(waveBack, {
+          y: 8,
+          duration: 4.0,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          force3D: true,
+        });
 
-                    {/* Contact Us */}
-                    <div>
-                        <h3 className="text-lg md:text-xl font-semibold text-body-color mb-4 md:mb-6">Contact Us</h3>
-                        <ul className="space-y-3 md:space-y-4 text-white-color text-xl md:text-[32px] font-semibold">
-                            <li>Gareeb-e-Nawaz Ave, Sector 11, Uttara, Dhaka - 1230</li>
-                            <li>+880 1865 94 21 83</li>
-                            <li>contact@davincymedia.com</li>
-                        </ul>
-                    </div>
-                </div>
+        gsap.to(waveFront, {
+          y: 12,
+          duration: 3.0,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          force3D: true,
+        });
 
-                {/* Large Branding Text */}
-                <div className="mt-10 md:mt-20 text-center">
-                    <h2 className="text-[8vw] font-semibold text-white-color leading-none select-none">
-                        DA VINCI MEDIA
-                    </h2>
-                </div>
+        const brandingHoverTl = gsap.timeline({ paused: true });
+        brandingHoverTl.to(wavesGroup, {
+          y: -110,
+          duration: 1.5,
+          ease: "power3.inOut",
+          force3D: true,
+        });
 
-            </section>
-            {/* Copyright */}
-            <div className="font-proxima bg-secondary-dark text-center text-white-color text-sm md:text-xl pt-3 pb-2">
-                @ {new Date().getFullYear()} Da Vinci Media. All rights reserved.
-            </div>
-        </footer>
-    );
+        waveContainer.addEventListener("mouseenter", () => brandingHoverTl.play());
+        waveContainer.addEventListener("mouseleave", () => brandingHoverTl.reverse());
+
+        // 5. Letter reveal + weightless floating
+        const chars = waveContainer.querySelectorAll(".wave-char");
+        if (chars.length > 0) {
+          gsap.set(chars, { transformOrigin: "50% 50%" });
+
+          const revealTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: waveContainer,
+              start: "top 95%",
+              toggleActions: "play none none none",
+            },
+          });
+
+          chars.forEach((char, index) => {
+            const delay = index * 0.05;
+            revealTl.fromTo(
+              char,
+              { opacity: 0, y: 50 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                onComplete: () => {
+                  if (prefersReduced) return;
+
+                  // Infinite sloshing vertical drift
+                  const floatTl = gsap.timeline({
+                    repeat: -1,
+                    yoyo: true,
+                    defaults: { ease: "sine.inOut" },
+                  });
+                  floatTl
+                    .to(char, {
+                      y: -16,
+                      duration: 2.2 + Math.random() * 0.4,
+                      force3D: true,
+                    })
+                    .to(char, {
+                      y: 4,
+                      duration: 2.2 + Math.random() * 0.4,
+                      force3D: true,
+                    });
+
+                  // Continuous rotation rocking
+                  gsap.to(char, {
+                    rotation: (index % 2 === 0 ? 1 : -1) * (3 + Math.random() * 2),
+                    duration: 3.5 + Math.random() * 1.5,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    force3D: true,
+                  });
+
+                  // Continuous organic scaling shifts
+                  gsap.to(char, {
+                    scaleY: 1.06,
+                    scaleX: 0.94,
+                    duration: 1.6 + Math.random() * 0.4,
+                    ease: "sine.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    force3D: true,
+                  });
+                },
+              },
+              delay
+            );
+          });
+        }
+      }
+    },
+    { scope: footerRef }
+  );
+
+  return (
+    <footer ref={footerRef} className="bg-primary-color">
+      {/* Top CTA */}
+      <FooterCTA />
+
+      {/* Bottom Columns */}
+      <FooterColumns />
+
+      {/* Large Branding text wave */}
+      <FooterBranding />
+
+      {/* Copyright */}
+      <div className="font-proxima bg-secondary-dark text-center text-white-color text-sm md:text-xl pt-3 pb-2">
+        @ {new Date().getFullYear()} Da Vinci Media. All rights reserved.
+      </div>
+    </footer>
+  );
 }

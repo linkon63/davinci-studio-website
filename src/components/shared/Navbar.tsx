@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useRef, useState } from "react"
 
 const menuItems = [
@@ -17,8 +18,16 @@ const menuItems = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
   const overlayRef = useRef<HTMLDivElement>(null)
   const linksRef = useRef<HTMLDivElement>(null)
+
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(path)
+  }
 
   useGSAP(() => {
     if (!overlayRef.current || !linksRef.current) return
@@ -80,16 +89,21 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden lg:flex items-center gap-[51px]">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.path}
-                className="text-white-color font-proxima font-semibold text-lg hover:text-recording-red transition-colors"
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          {menuItems.map((item) => {
+            const active = isActive(item.path)
+            return (
+              <li key={item.name}>
+                <Link
+                  href={item.path}
+                  className={`font-proxima font-semibold text-lg hover:text-recording-red transition-colors ${
+                    active ? "text-recording-red" : "text-white-color"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
 
         <button
@@ -127,16 +141,21 @@ export default function Navbar() {
           className="fixed inset-0 z-40 bg-[#010101] lg:hidden flex-col items-center justify-center"
         >
           <div ref={linksRef} className="flex flex-col items-center gap-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-white-color font-proxima font-semibold text-3xl hover:text-recording-red transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const active = isActive(item.path)
+              return (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`font-proxima font-semibold text-3xl hover:text-recording-red transition-colors ${
+                    active ? "text-recording-red" : "text-white-color"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>

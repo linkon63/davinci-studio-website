@@ -1,3 +1,5 @@
+import { DetailImages } from "./common";
+
 export type RowType = "split" | "centered" | "grid";
 
 export interface CaseStudy {
@@ -9,12 +11,6 @@ export interface CaseStudy {
   aspectRatio: string;
   widthClass: string;
   sizes: string;
-}
-
-export interface BreadcrumbPath {
-  name: string;
-  href?: string;
-  active?: boolean;
 }
 
 export interface CaseRow {
@@ -33,11 +29,5 @@ export interface ProjectDetail {
   challenge: string;
   solution: string;
   features: string[];
-  images: {
-    hero: string;
-    gallery1: string;
-    gallery2: string;
-    gallery3: string;
-    bottom: string;
-  };
+  images: DetailImages;
 }

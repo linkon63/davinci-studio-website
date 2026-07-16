@@ -1,4 +1,13 @@
 import { CaseStudy, ProjectDetail } from "@/types/work";
+import { DetailImages } from "@/types/common";
+
+const DEFAULT_PROJECT_IMAGES: DetailImages = {
+  hero: "/assets/img/work/work-details1.webp",
+  gallery1: "/assets/img/work/work-details2.webp",
+  gallery2: "/assets/img/work/work-details3.webp",
+  gallery3: "/assets/img/work/work-details4.webp",
+  bottom: "/assets/img/work/work-details5.webp",
+};
 
 export const initialCaseStudies: CaseStudy[] = [
   {
@@ -53,6 +62,27 @@ export const initialCaseStudies: CaseStudy[] = [
   },
 ];
 
+export const additionalCaseStudies: Omit<CaseStudy, "id">[] = [
+  {
+    title: "Apex Luxury E-Commerce Rebrand",
+    category: "Brand Strategy",
+    year: "2026",
+    image: "/assets/img/work/work1.webp",
+    aspectRatio: "aspect-[480/371]",
+    widthClass: "w-full",
+    sizes: "(max-width: 1024px) 100vw, 608px",
+  },
+  {
+    title: "Zenith Mobile Banking Interface",
+    category: "Mobile UX Design",
+    year: "2026",
+    image: "/assets/img/work/work2.webp",
+    aspectRatio: "aspect-[700/535]",
+    widthClass: "w-full",
+    sizes: "(max-width: 1024px) 100vw, 608px",
+  },
+];
+
 export const projectDetails: Record<number, ProjectDetail> = {
   1: {
     title: "FinFlow Business Intelligence SaaS Dashboard",
@@ -75,13 +105,7 @@ export const projectDetails: Record<number, ProjectDetail> = {
       "Custom Reports",
       "Design System Components"
     ],
-    images: {
-      hero: "/assets/img/work/work-details1.webp",
-      gallery1: "/assets/img/work/work-details2.webp",
-      gallery2: "/assets/img/work/work-details3.webp",
-      gallery3: "/assets/img/work/work-details4.webp",
-      bottom: "/assets/img/work/work-details5.webp"
-    }
+    images: DEFAULT_PROJECT_IMAGES
   },
   2: {
     title: "Aura Brand Identity & Web Platform",
@@ -104,13 +128,7 @@ export const projectDetails: Record<number, ProjectDetail> = {
       "Modern Digital Guidelines",
       "Fluid Animation Systems"
     ],
-    images: {
-      hero: "/assets/img/work/work-details1.webp",
-      gallery1: "/assets/img/work/work-details2.webp",
-      gallery2: "/assets/img/work/work-details3.webp",
-      gallery3: "/assets/img/work/work-details4.webp",
-      bottom: "/assets/img/work/work-details5.webp"
-    }
+    images: DEFAULT_PROJECT_IMAGES
   },
   3: {
     title: "NEWME Luxury Fashion Editorial Magazine",
@@ -133,13 +151,7 @@ export const projectDetails: Record<number, ProjectDetail> = {
       "Print-to-Digital Transitions",
       "Staggered Text Segments"
     ],
-    images: {
-      hero: "/assets/img/work/work-details1.webp",
-      gallery1: "/assets/img/work/work-details2.webp",
-      gallery2: "/assets/img/work/work-details3.webp",
-      gallery3: "/assets/img/work/work-details4.webp",
-      bottom: "/assets/img/work/work-details5.webp"
-    }
+    images: DEFAULT_PROJECT_IMAGES
   },
   4: {
     title: "Nova Corp Identity Stationery Mockups",
@@ -162,13 +174,7 @@ export const projectDetails: Record<number, ProjectDetail> = {
       "Minimal Vector Elements",
       "Scalable Vector Layouts"
     ],
-    images: {
-      hero: "/assets/img/work/work-details1.webp",
-      gallery1: "/assets/img/work/work-details2.webp",
-      gallery2: "/assets/img/work/work-details3.webp",
-      gallery3: "/assets/img/work/work-details4.webp",
-      bottom: "/assets/img/work/work-details5.webp"
-    }
+    images: DEFAULT_PROJECT_IMAGES
   },
   5: {
     title: "Omni Fintech Mobile App Architecture",
@@ -191,12 +197,6 @@ export const projectDetails: Record<number, ProjectDetail> = {
       "Monitored Account Limits",
       "Encrypted Cloud Backups"
     ],
-    images: {
-      hero: "/assets/img/work/work-details1.webp",
-      gallery1: "/assets/img/work/work-details2.webp",
-      gallery2: "/assets/img/work/work-details3.webp",
-      gallery3: "/assets/img/work/work-details4.webp",
-      bottom: "/assets/img/work/work-details5.webp"
-    }
+    images: DEFAULT_PROJECT_IMAGES
   }
 };

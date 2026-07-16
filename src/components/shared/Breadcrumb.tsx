@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
-import { BreadcrumbPath } from "@/types/work";
+import { BreadcrumbPath } from "@/types/common";
 
 interface BreadcrumbProps {
   title: string;

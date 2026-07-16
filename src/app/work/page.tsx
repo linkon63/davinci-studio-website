@@ -9,8 +9,9 @@ import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import CaseRowRenderer from "@/components/work/CaseRowRenderer";
 import LoadMoreButton from "@/components/work/LoadMoreButton";
-import { CaseStudy, CaseRow, BreadcrumbPath } from "@/types/work";
-import { initialCaseStudies } from "@/data/work";
+import { CaseStudy, CaseRow } from "@/types/work";
+import { BreadcrumbPath } from "@/types/common";
+import { initialCaseStudies, additionalCaseStudies } from "@/data/work";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -253,28 +254,10 @@ export default function WorkPage() {
   const handleLoadMore = () => {
     setLoading(true);
     setTimeout(() => {
-      const nextCases: CaseStudy[] = [
-        {
-          id: cases.length + 1,
-          title: "Apex Luxury E-Commerce Rebrand",
-          category: "Brand Strategy",
-          year: "2026",
-          image: "/assets/img/work/work1.webp",
-          aspectRatio: "aspect-[480/371]",
-          widthClass: "w-full",
-          sizes: "(max-width: 1024px) 100vw, 608px",
-        },
-        {
-          id: cases.length + 2,
-          title: "Zenith Mobile Banking Interface",
-          category: "Mobile UX Design",
-          year: "2026",
-          image: "/assets/img/work/work2.webp",
-          aspectRatio: "aspect-[700/535]",
-          widthClass: "w-full",
-          sizes: "(max-width: 1024px) 100vw, 608px",
-        },
-      ];
+      const nextCases: CaseStudy[] = additionalCaseStudies.map((c, idx) => ({
+        ...c,
+        id: cases.length + 1 + idx,
+      }));
       setCases((prev) => [...prev, ...nextCases]);
       setLoading(false);
     }, 1000);

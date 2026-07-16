@@ -34,7 +34,7 @@ export default function AboutDescription() {
     }, { scope: containerRef });
 
     return (
-        <div ref={containerRef} className="bg-primary-color py-10 md:py-[70px] overflow-hidden">
+        <div ref={containerRef} className="bg-primary-color py-10 md:py-[70px] px-4 overflow-hidden">
             <div className="container text-center font-proxima text-[28px] md:text-[36px] lg:text-[46px] font-semibold leading-tight">
                 <div className="reveal-line reveal-text">At Da Vinci Media, we combine creativity, technology, and</div>
                 <div className="reveal-line reveal-text"> strategy to help businesses build impactful digital experiences.</div>

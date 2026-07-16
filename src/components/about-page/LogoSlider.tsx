@@ -30,7 +30,7 @@ export default function LogoSlider() {
     <div className="w-full bg-primary-color overflow-hidden flex flex-col items-center py-[70px]">
       {/* Heading */}
       <div>
-        <h1 className="font-proxima font-semibold text-[32px] text-white-color mb-6">
+        <h1 className="font-proxima font-semibold text-[28px] md:text-[32px] text-center text-white-color mb-6 px-4">
           We worked with global largest brands
         </h1>
       </div>
@@ -43,7 +43,7 @@ export default function LogoSlider() {
 
       {/* Slider with edge fades */}
       <div
-        className="relative w-full py-[52px]"
+        className="relative w-full py-8 md:py-[52px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >

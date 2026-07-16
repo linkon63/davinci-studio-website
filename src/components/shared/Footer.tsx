@@ -147,9 +147,9 @@ export default function Footer() {
                     <div>
                         <h3 className="text-lg md:text-xl font-semibold text-body-color mb-4 md:mb-6">Contact Us</h3>
                         <ul className="space-y-3 md:space-y-4 text-white-color text-xl md:text-[32px] font-semibold">
-                            <li>Gareeb-e-Nawaz Ave, Sector 11, Uttara, Dhaka - 1230</li>
-                            <li>+880 1865 94 21 83</li>
-                            <li>contact@davincymedia.com</li>
+                            <li className="break-all">Gareeb-e-Nawaz Ave, Sector 11, Uttara, Dhaka - 1230</li>
+                            <li className="break-all">+880 1865 94 21 83</li>
+                            <li className="break-all">contact@davincymedia.com</li>
                         </ul>
                     </div>
                 </div>

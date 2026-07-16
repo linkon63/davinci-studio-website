@@ -3,6 +3,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import ContactForm from "@/components/contact/ContactForm";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -17,9 +18,10 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F5]">
-      {/* Header / Navbar */}
-      <Navbar />
+    <SmoothScroll>
+      <div className="flex flex-col min-h-screen bg-[#FAF9F5]">
+        {/* Header / Navbar */}
+        <Navbar />
 
       {/* Main Content Area */}
       <main className="flex-grow">
@@ -36,6 +38,7 @@ export default function ContactPage() {
 
       {/* Footer */}
       <Footer />
-    </div>
+      </div>
+    </SmoothScroll>
   );
 }

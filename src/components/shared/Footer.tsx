@@ -165,7 +165,7 @@ export default function Footer() {
         // 5. Letter reveal + weightless floating
         const chars = waveContainer.querySelectorAll(".wave-char");
         if (chars.length > 0) {
-          gsap.set(chars, { transformOrigin: "50% 50%" });
+          gsap.set(chars, { transformOrigin: "50% 50%", opacity: 0, scale: 0.8 });
 
           const revealTl = gsap.timeline({
             scrollTrigger: {
@@ -176,14 +176,17 @@ export default function Footer() {
           });
 
           chars.forEach((char, index) => {
-            const delay = index * 0.05;
+            const delay = index * 0.04;
+            gsap.set(char, { transformOrigin: "50% 50%", opacity: 0, scale: 0.6, rotation: index % 2 === 0 ? -12 : 12, filter: "blur(12px)" });
             revealTl.fromTo(
               char,
-              { opacity: 0, y: 50 },
+              { opacity: 0, scale: 0.6, rotation: index % 2 === 0 ? -12 : 12, filter: "blur(12px)" },
               {
                 opacity: 1,
-                y: 0,
-                duration: 0.8,
+                scale: 1,
+                rotation: 0,
+                filter: "blur(0px)",
+                duration: 1.4,
                 ease: "power3.out",
                 onComplete: () => {
                   if (prefersReduced) return;

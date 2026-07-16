@@ -8,6 +8,7 @@ import { use, useRef } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 import { projectDetails } from "@/data/work";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -201,8 +202,9 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
   }, { scope: containerRef });
 
   return (
-    <div className="bg-[#010101] min-h-screen flex flex-col font-proxima text-white-color select-none">
-      <Navbar />
+    <SmoothScroll>
+      <div className="bg-[#010101] min-h-screen flex flex-col font-proxima text-white-color select-none">
+        <Navbar />
 
       <Breadcrumb
         title={project.title}
@@ -362,6 +364,7 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </SmoothScroll>
   );
 }

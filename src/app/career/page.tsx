@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 import JobCard from "@/components/career/JobCard";
 import { jobPositions } from "@/data/career";
 
@@ -99,8 +100,9 @@ export default function CareerPage() {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F5]">
-      <Navbar />
+    <SmoothScroll>
+      <div className="flex flex-col min-h-screen bg-[#FAF9F5]">
+        <Navbar />
 
       <main className="flex-grow">
         {/* Breadcrumb Hero */}
@@ -144,6 +146,7 @@ export default function CareerPage() {
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </SmoothScroll>
   );
 }

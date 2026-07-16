@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 import BlogCard from "@/components/shared/BlogCard";
 import Pagination from "@/components/shared/Pagination";
 import { initialBlogPosts } from "@/data/blog";
@@ -56,8 +57,9 @@ export default function BlogPage() {
   }, { scope: containerRef });
 
   return (
-    <div className="bg-[#010101] min-h-screen flex flex-col font-proxima text-white-color select-none">
-      <Navbar />
+    <SmoothScroll>
+      <div className="bg-[#010101] min-h-screen flex flex-col font-proxima text-white-color select-none">
+        <Navbar />
 
       <Breadcrumb
         title="Blog & News"
@@ -88,6 +90,7 @@ export default function BlogPage() {
       </main>
 
       <Footer />
-    </div>
+      </div>
+    </SmoothScroll>
   );
 }

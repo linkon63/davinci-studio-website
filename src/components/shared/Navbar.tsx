@@ -82,7 +82,7 @@ export default function Navbar() {
   }, { dependencies: [isMenuOpen] })
 
   return (
-    <nav className="bg-[#010101]">
+    <nav className="bg-[#010101] border-b border-zinc-900">
       <div className="max-w-[1320px] mx-auto flex items-center justify-between px-4 lg:px-6">
         <Link href="/" className="flex items-center py-3">
           <Image

@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import SmoothScroll from "@/components/shared/SmoothScroll";
 import CaseRowRenderer from "@/components/work/CaseRowRenderer";
 import LoadMoreButton from "@/components/work/LoadMoreButton";
 import { CaseStudy, CaseRow } from "@/types/work";
@@ -264,30 +265,32 @@ export default function WorkPage() {
   };
 
   return (
-    <div className="bg-[#010101] min-h-screen flex flex-col font-proxima">
-      <Navbar />
+    <SmoothScroll>
+      <div className="bg-[#010101] min-h-screen flex flex-col font-proxima">
+        <Navbar />
 
-      <Breadcrumb
-        title="Our Case Study"
-        description="Da Vinci Media helps brands stand out with exceptional design, powerful websites, strategic marketing, and creative digital solutions."
-        paths={breadcrumbPaths}
-      />
-
-      <main
-        ref={containerRef}
-        className="container mx-auto px-4 md:px-6 py-20 md:py-28 flex flex-col gap-16 md:gap-24"
-      >
-        {layoutRows.map((row) => (
-          <CaseRowRenderer key={row.id} row={row} />
-        ))}
-
-        <LoadMoreButton
-          onClick={handleLoadMore}
-          loading={loading}
+        <Breadcrumb
+          title="Our Case Study"
+          description="Da Vinci Media helps brands stand out with exceptional design, powerful websites, strategic marketing, and creative digital solutions."
+          paths={breadcrumbPaths}
         />
-      </main>
 
-      <Footer />
-    </div>
+        <main
+          ref={containerRef}
+          className="container mx-auto px-4 md:px-6 py-20 md:py-28 flex flex-col gap-16 md:gap-24"
+        >
+          {layoutRows.map((row) => (
+            <CaseRowRenderer key={row.id} row={row} />
+          ))}
+
+          <LoadMoreButton
+            onClick={handleLoadMore}
+            loading={loading}
+          />
+        </main>
+
+        <Footer />
+      </div>
+    </SmoothScroll>
   );
 }

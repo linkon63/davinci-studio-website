@@ -85,14 +85,8 @@ export default function CaseStudyGallery() {
 
       ScrollTrigger.create({
         trigger: ref.current,
-        start: "top 80%",
+        start: "top 90%",
         onEnter: () => tween.play(),
-      });
-
-      ScrollTrigger.create({
-        trigger: ref.current,
-        start: "top 40%",
-        onLeaveBack: () => tween.reverse(),
       });
     });
 

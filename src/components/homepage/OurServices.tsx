@@ -91,10 +91,10 @@ export default function OurServices() {
 
         const tl = gsap.timeline({ paused: true });
         tl.from(text.chars, {
-            y: 50,
+            x: -50,
             opacity: 0,
             duration: 1,
-            stagger: 0.03,
+            stagger: 0.05,
             ease: "power1.out",
         });
 
@@ -102,12 +102,6 @@ export default function OurServices() {
             trigger: sectionRef.current,
             start: "top 70%",
             onEnter: () => tl.play(),
-        });
-
-        ScrollTrigger.create({
-            trigger: sectionRef.current,
-            start: "top 40%",
-            onLeaveBack: () => tl.reverse(),
         });
 
         return () => {

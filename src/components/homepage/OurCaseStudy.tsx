@@ -28,14 +28,8 @@ export default function OurCaseStudy() {
 
         ScrollTrigger.create({
             trigger: container.current,
-            start: "top 70%",
+            start: "top 90%",
             onEnter: () => tl.play(),
-        });
-
-        ScrollTrigger.create({
-            trigger: container.current,
-            start: "top 40%",
-            onLeaveBack: () => tl.reverse(),
         });
     }, { scope: container });
 

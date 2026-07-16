@@ -5,7 +5,8 @@ import gsap from "gsap"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 
 const menuItems = [
   { name: "WORK", path: "/work" },
@@ -28,6 +29,9 @@ export default function Navbar() {
     }
     return pathname.startsWith(path)
   }
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   useGSAP(() => {
     if (!overlayRef.current || !linksRef.current) return
@@ -39,7 +43,10 @@ export default function Navbar() {
     if (isMenuOpen) {
       gsap.set(overlayRef.current, { display: "flex" })
 
-      if (prefersReduced) return
+      if (prefersReduced) {
+        gsap.set(linksRef.current.children, { opacity: 1, y: 0 })
+        return
+      }
 
       const tl = gsap.timeline()
       tl.fromTo(
@@ -159,6 +166,37 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {mounted &&
+        createPortal(
+          <div
+            ref={overlayRef}
+            style={{ display: "none" }}
+            className="fixed inset-0 z-40 bg-[#010101] flex-col items-center justify-center"
+          >
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center"
+              aria-label="Close menu"
+            >
+              <span className="absolute w-6 h-[2px] bg-white rotate-45" />
+              <span className="absolute w-6 h-[2px] bg-white -rotate-45" />
+            </button>
+            <div ref={linksRef} className="flex flex-col items-center gap-8">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white-color font-proxima font-semibold text-3xl hover:text-recording-red transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>,
+          document.getElementById("mobile-menu-root")!
+        )}
     </nav>
   )
 }

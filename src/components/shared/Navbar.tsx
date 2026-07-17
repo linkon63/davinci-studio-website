@@ -84,14 +84,14 @@ export default function Navbar() {
   return (
     <nav className="bg-[#010101] border-b border-zinc-900">
       <div className="max-w-[1320px] mx-auto flex items-center justify-between px-4 lg:px-6">
-        <Link href="/" className="flex items-center py-3">
+        <Link href="/" className="flex items-center py-2 sm:py-2 lg:py-3">
           <Image
             src="/logo.jpg"
             alt="Da Vinci Media"
-            width={76}
-            height={48}
+            width={948}
+            height={915}
             priority
-            className="h-[48px] w-[76px] object-contain"
+            className="h-14 lg:h-16 xl:h-18 w-auto object-contain"
           />
         </Link>
 

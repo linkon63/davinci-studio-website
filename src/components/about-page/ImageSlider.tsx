@@ -11,12 +11,10 @@ const images = [
   "/assets/homepage/case1.webp",
   "/assets/homepage/case2.webp",
   "/assets/homepage/case3.webp",
-  "/assets/homepage/case4.webp",
   "/assets/homepage/case5.webp",
   "/assets/homepage/service1.webp",
   "/assets/homepage/service2.webp",
   "/assets/homepage/service3.webp",
-  "/assets/homepage/blog1.webp",
 ];
 
 export default function ImageSlider() {

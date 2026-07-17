@@ -12,59 +12,105 @@ export default function WhoWeAre() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 70%",
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReduced) return;
+
+        const mm = gsap.matchMedia();
+
+        mm.add(
+            {
+                isMobile: "(max-width: 1023px)",
+                isDesktop: "(min-width: 1024px)",
             },
-        });
+            (context) => {
+                const { isMobile } = context.conditions as { isMobile: boolean };
 
-        // SVG spins in with spring overshoot
-        tl.from(".who-svg", {
-            rotation: -180,
-            scale: 0.5,
-            opacity: 0,
-            duration: 0.8,
-            ease: "back.out(1.7)",
-        });
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: containerRef.current,
+                        start: "top 70%",
+                    },
+                });
 
-        // "Our Story" chars stagger from left with blur
-        const storyText = new SplitType("#ourStoryTitle", { types: "chars" });
-        tl.from(storyText.chars, {
-            x: -40,
-            opacity: 0,
-            filter: "blur(4px)",
-            duration: 0.8,
-            stagger: 0.03,
-            ease: "power3.out",
-        }, "-=0.7");
+                tl.from(".who-svg", {
+                    rotation: -180,
+                    scale: 0.5,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "back.out(1.7)",
+                });
 
-        // "Our Story" paragraph wipes up
-        tl.from("#ourStoryCard p", {
-            clipPath: "inset(0 0 100% 0)",
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out",
-        }, "-=0.6");
+                if (isMobile) {
+                    // Mobile: Who We Are is on top (flex-col-reverse) → animate first
+                    const whoText = new SplitType("#whoWeAreTitle", { types: "chars" });
+                    tl.from(whoText.chars, {
+                        x: -40,
+                        opacity: 0,
+                        filter: "blur(4px)",
+                        duration: 0.8,
+                        stagger: 0.03,
+                        ease: "power3.out",
+                    }, "-=0.7");
+                    tl.from("#whoWeAreCard p", {
+                        clipPath: "inset(0 0 100% 0)",
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                    }, "-=0.6");
 
-        // "Who We Are" chars stagger from right with blur
-        const whoText = new SplitType("#whoWeAreTitle", { types: "chars" });
-        tl.from(whoText.chars, {
-            x: 40,
-            opacity: 0,
-            filter: "blur(4px)",
-            duration: 0.8,
-            stagger: 0.03,
-            ease: "power3.out",
-        }, "-=0.6");
+                    // Our Story is on bottom → animate second
+                    const storyText = new SplitType("#ourStoryTitle", { types: "chars" });
+                    tl.from(storyText.chars, {
+                        x: 40,
+                        opacity: 0,
+                        filter: "blur(4px)",
+                        duration: 0.8,
+                        stagger: 0.03,
+                        ease: "power3.out",
+                    }, "-=0.6");
+                    tl.from("#ourStoryCard p", {
+                        clipPath: "inset(0 0 100% 0)",
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                    }, "-=0.6");
+                } else {
+                    // Desktop: Our Story is on left → animate first
+                    const storyText = new SplitType("#ourStoryTitle", { types: "chars" });
+                    tl.from(storyText.chars, {
+                        x: -40,
+                        opacity: 0,
+                        filter: "blur(4px)",
+                        duration: 0.8,
+                        stagger: 0.03,
+                        ease: "power3.out",
+                    }, "-=0.7");
+                    tl.from("#ourStoryCard p", {
+                        clipPath: "inset(0 0 100% 0)",
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                    }, "-=0.6");
 
-        //  "Who We Are" paragraph wipes up
-        tl.from("#whoWeAreCard p", {
-            clipPath: "inset(0 0 100% 0)",
-            opacity: 0,
-            duration: 0.8,
-            ease: "power3.out",
-        }, "-=0.6");
+                    // Who We Are is on right → animate second
+                    const whoText = new SplitType("#whoWeAreTitle", { types: "chars" });
+                    tl.from(whoText.chars, {
+                        x: 40,
+                        opacity: 0,
+                        filter: "blur(4px)",
+                        duration: 0.8,
+                        stagger: 0.03,
+                        ease: "power3.out",
+                    }, "-=0.6");
+                    tl.from("#whoWeAreCard p", {
+                        clipPath: "inset(0 0 100% 0)",
+                        opacity: 0,
+                        duration: 0.8,
+                        ease: "power3.out",
+                    }, "-=0.6");
+                }
+            },
+        );
     }, { scope: containerRef });
 
     return (
@@ -76,7 +122,6 @@ export default function WhoWeAre() {
                 className="who-svg absolute top-[3%] right-[8%] md:top-[2%] md:right-[15%] lg:top-[5%] 2xl:top-[3%] lg:right-[2%] 2xl:right-[15%] w-[180px] md:w-[200px] lg:w-[260px] h-auto opacity-100 pointer-events-none"
             />
 
-            {/* Container using flex items-end to align cards at the bottom */}
             <div className="container flex flex-col-reverse lg:flex-row items-end gap-8 relative z-10">
 
                 {/* Our Story Card */}

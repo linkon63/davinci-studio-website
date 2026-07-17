@@ -6,6 +6,7 @@ const routeNameMap: Record<string, string> = {
   career: "Career",
   contact: "Contact Us",
   service: "Service",
+  "about-us": "About Us",
 };
 
 export function getBreadcrumbs(pathname: string): BreadcrumbPath[] {

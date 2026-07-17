@@ -17,24 +17,10 @@ const montserrat = localFont({
   variable: "--font-montserrat",
   display: "swap",
   src: [
-    { path: "../../public/fonts/montserrat/Montserrat-Thin.ttf", weight: "100", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-ThinItalic.ttf", weight: "100", style: "italic" },
-    { path: "../../public/fonts/montserrat/Montserrat-ExtraLight.ttf", weight: "200", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-ExtraLightItalic.ttf", weight: "200", style: "italic" },
-    { path: "../../public/fonts/montserrat/Montserrat-Light.ttf", weight: "300", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-LightItalic.ttf", weight: "300", style: "italic" },
     { path: "../../public/fonts/montserrat/Montserrat-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-Italic.ttf", weight: "400", style: "italic" },
     { path: "../../public/fonts/montserrat/Montserrat-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-MediumItalic.ttf", weight: "500", style: "italic" },
     { path: "../../public/fonts/montserrat/Montserrat-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-SemiBoldItalic.ttf", weight: "600", style: "italic" },
     { path: "../../public/fonts/montserrat/Montserrat-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-BoldItalic.ttf", weight: "700", style: "italic" },
-    { path: "../../public/fonts/montserrat/Montserrat-ExtraBold.ttf", weight: "800", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-ExtraBoldItalic.ttf", weight: "800", style: "italic" },
-    { path: "../../public/fonts/montserrat/Montserrat-Black.ttf", weight: "900", style: "normal" },
-    { path: "../../public/fonts/montserrat/Montserrat-BlackItalic.ttf", weight: "900", style: "italic" },
   ],
 });
 
@@ -42,18 +28,10 @@ const proxima = localFont({
   variable: "--font-proxima",
   display: "swap",
   src: [
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Light.ttf", weight: "300", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-LightItalic.ttf", weight: "300", style: "italic" },
     { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Italic.ttf", weight: "400", style: "italic" },
     { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-MediumItalic.ttf", weight: "500", style: "italic" },
     { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Semibold.ttf", weight: "600", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-SemiboldItalic.ttf", weight: "600", style: "italic" },
     { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-BoldItalic.ttf", weight: "700", style: "italic" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Extrabold.ttf", weight: "800", style: "normal" },
-    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-ExtraboldItalic.ttf", weight: "800", style: "italic" },
   ],
 });
 

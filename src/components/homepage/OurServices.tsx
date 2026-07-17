@@ -139,7 +139,7 @@ export default function OurServices() {
                                         src={service.image}
                                         alt={service.id}
                                         fill
-                                        className="object-cover rounded-lg"
+                                        className="object-cover"
                                     />
                                 </div>
 

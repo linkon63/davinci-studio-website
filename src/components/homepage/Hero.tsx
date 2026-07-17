@@ -3,14 +3,34 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useRef } from "react"
+import SplitType from "split-type"
 
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
     const containerRef = useRef(null);
+    const heroRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
+        if (!heroRef.current) return;
+
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let titleText: SplitType | null = null;
+
+        if (!prefersReduced) {
+            const titleEl = heroRef.current.querySelector("#hero-title");
+            if (titleEl) {
+                titleText = new SplitType(titleEl as HTMLElement, { types: "chars" });
+                gsap.from(titleText.chars, {
+                    x: 50,
+                    opacity: 0,
+                    duration: 1,
+                    stagger: 0.03,
+                    ease: "power1.out"
+                });
+            }
+        }
 
         const matchMedia = gsap.matchMedia();
 
@@ -19,7 +39,7 @@ export default function Hero() {
             isXl: "(max-width: 1535px) and (min-width: 1280px)",
             isLg: "(max-width: 1279px) and (min-width: 1024px)",
         }, (context) => {
-            const { is2xl, isXl, isLg } = context.conditions as any;
+            const { is2xl, isXl } = context.conditions as Record<string, boolean>;
 
             const config = is2xl
                 ? { x: -460, y: 700, scale: 2.4 }
@@ -39,13 +59,18 @@ export default function Hero() {
             });
         });
 
-        return () => matchMedia.revert();
-    }, [])
+        return () => {
+            matchMedia.revert();
+            if (titleText) {
+                titleText.revert();
+            }
+        };
+    }, { scope: heroRef })
 
     return (
-        <div className="bg-black bg-[url('/assets/hompage/hero-bg.png')]   bg-no-repeat pt-[80px] pb-[80px] px-6 md:pt-[120px] md:pb-[120px] md:px-8 lg:pt-[180px] lg:pb-[180px] xl:px-4 2xl:px-0">
+        <div ref={heroRef} className="bg-black bg-[url('/assets/hompage/hero-bg.png')]   bg-no-repeat pt-[80px] pb-[80px] px-6 md:pt-[120px] md:pb-[120px] md:px-8 lg:pt-[180px] lg:pb-[180px] xl:px-4 2xl:px-0">
             <div className="max-w-[1600px] mx-auto flex flex-col lg:flex-col lg:flex-row gap-6 justify-center">
-                <div className="font-proxima lg:w-[57%] text-[36px] font-semibold max-w-none md:text-[60px] md:max-w-none lg:text-[60px] xl:text-[70px] 2xl:text-[100px] lg:max-w-225 text-[#F4F4EA] tracking-[-0.02em] leading-[36px] md:leading-[60px] lg:leading-[100px] uppercase relative z-20">
+                <div id="hero-title" className="font-proxima lg:w-[57%] text-[36px] font-semibold max-w-none md:text-[60px] md:max-w-none lg:text-[60px] xl:text-[70px] 2xl:text-[100px] lg:max-w-225 text-[#F4F4EA] tracking-[-0.02em] leading-[36px] md:leading-[60px] lg:leading-[100px] uppercase relative z-20">
                     Turning Creative Ideas Into Powerful Digital Experiences
                 </div>
                 <div className="lg:w-[43%]">

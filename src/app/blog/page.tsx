@@ -15,10 +15,6 @@ import { BlogPost } from "@/types/blog";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const breadcrumbPaths = [
-  { name: "Home", href: "/" },
-  { name: "Blog & News", active: true },
-];
 
 export default function BlogPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,7 +60,6 @@ export default function BlogPage() {
       <Breadcrumb
         title="Blog & News"
         description="Stay ahead of the latest trends in design, development, branding, and digital marketing. Explore expert insights, practical guides, and creative ideas to help your business grow in the digital world."
-        paths={breadcrumbPaths}
       />
 
       <main

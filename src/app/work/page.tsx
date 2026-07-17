@@ -12,15 +12,9 @@ import SmoothScroll from "@/components/shared/SmoothScroll";
 import CaseRowRenderer from "@/components/work/CaseRowRenderer";
 import LoadMoreButton from "@/components/work/LoadMoreButton";
 import { CaseStudy, CaseRow } from "@/types/work";
-import { BreadcrumbPath } from "@/types/common";
 import { initialCaseStudies, additionalCaseStudies } from "@/data/work";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const breadcrumbPaths: BreadcrumbPath[] = [
-  { name: "Home", href: "/" },
-  { name: "Work", active: true },
-];
 
 function groupCasesForLayout(items: CaseStudy[]): CaseRow[] {
   const rows: CaseRow[] = [];
@@ -284,7 +278,6 @@ export default function WorkPage() {
         <Breadcrumb
           title="Our Case Study"
           description="Da Vinci Media helps brands stand out with exceptional design, powerful websites, strategic marketing, and creative digital solutions."
-          paths={breadcrumbPaths}
         />
 
         <main

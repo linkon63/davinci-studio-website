@@ -12,10 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const breadcrumbPaths = [
-    { name: "HOME", href: "/" },
-    { name: "CONTACT US", active: true },
-  ];
 
   return (
     <SmoothScroll>
@@ -29,7 +25,6 @@ export default function ContactPage() {
         <Breadcrumb
           title="CONTACT US"
           description="Whether you're starting a new project, looking to enhance your digital presence, or simply have a question, we're here to help. Get in touch with our team, and let's create something extraordinary together."
-          paths={breadcrumbPaths}
         />
 
         {/* Contact Info & Message Form Grid Section */}

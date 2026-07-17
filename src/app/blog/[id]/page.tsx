@@ -214,11 +214,6 @@ export default function BlogDetailsPage({ params }: BlogDetailsProps) {
       <Breadcrumb
         title={blog.title}
         description={blog.description}
-        paths={[
-          { name: "Home", href: "/" },
-          { name: "Blog", href: "/blog" },
-          { name: "Blog Details", active: true },
-        ]}
       />
 
       <main

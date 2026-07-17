@@ -7,17 +7,21 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 import SplitType from "split-type";
+import { usePathname } from "next/navigation";
 import { BreadcrumbPath } from "@/types/common";
+import { getBreadcrumbs } from "@/utils/breadcrumb";
 
 interface BreadcrumbProps {
   title: string;
   description: string;
-  paths: BreadcrumbPath[];
+  paths?: BreadcrumbPath[];
   className?: string;
 }
 
 export default function Breadcrumb({ title, description, paths, className }: BreadcrumbProps) {
   const breadcrumbRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const resolvedPaths = paths || getBreadcrumbs(pathname);
 
   useGSAP(() => {
     if (!breadcrumbRef.current) return;
@@ -107,7 +111,7 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
               aria-label="Breadcrumb"
               className="flex items-center gap-3 bg-transparent py-2 border-b border-transparent"
             >
-              {paths.map((path, index) => (
+              {resolvedPaths.map((path, index) => (
                 <div key={path.name} className="flex items-center gap-3">
                   {path.href && !path.active ? (
                     <Link
@@ -122,7 +126,7 @@ export default function Breadcrumb({ title, description, paths, className }: Bre
                     </span>
                   )}
 
-                  {index < paths.length - 1 && (
+                  {index < resolvedPaths.length - 1 && (
                     <div className="relative w-6 h-6 flex items-center justify-center shrink-0">
                       <Image
                         src="/bredcump-icon.svg"

@@ -214,11 +214,6 @@ export default function WorkDetailsPage({ params }: WorkDetailsProps) {
       <Breadcrumb
         title={project.title}
         description={project.description}
-        paths={[
-          { name: "Home", href: "/" },
-          { name: "Work", href: "/work" },
-          { name: "Work Details", active: true },
-        ]}
       />
 
       <main

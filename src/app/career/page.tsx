@@ -14,10 +14,6 @@ import { jobPositions } from "@/data/career";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const breadcrumbPaths = [
-  { name: "Home", href: "/" },
-  { name: "Career", active: true },
-];
 
 export default function CareerPage() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -147,7 +143,6 @@ export default function CareerPage() {
         <Breadcrumb
           title="JOIN OUR TEAM"
           description="Join a team of passionate designers, developers, marketers, and creative thinkers who are shaping exceptional digital products. At Da Vinci Media, you'll work on meaningful projects, collaborate with talented professionals, and grow your career in an inspiring environment."
-          paths={breadcrumbPaths}
         />
 
         {/* Open Positions Section */}

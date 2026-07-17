@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import AboutDescription from "@/components/about-page/AboutDescription";
 import BookSection from "@/components/about-page/BookSection";
 import EntranceReveal from "@/components/about-page/EntranceReveal";
@@ -10,6 +11,11 @@ import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "At Da Vinci Media, we combine creativity, technology, and strategy to help businesses build impactful digital experiences.",
+};
 
 export default function AboutPage() {
     return (

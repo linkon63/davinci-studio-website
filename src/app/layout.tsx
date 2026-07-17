@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import { siteUrl } from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,8 +35,6 @@ const proxima = localFont({
     { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Bold.ttf", weight: "700", style: "normal" },
   ],
 });
-
-const siteUrl = "https://davincimedia.studio";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

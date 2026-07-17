@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,12 +13,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const montserrat = localFont({
+  variable: "--font-montserrat",
+  display: "swap",
+  src: [
+    { path: "../../public/fonts/montserrat/Montserrat-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/montserrat/Montserrat-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/montserrat/Montserrat-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../../public/fonts/montserrat/Montserrat-Bold.ttf", weight: "700", style: "normal" },
+  ],
+});
+
+const proxima = localFont({
+  variable: "--font-proxima",
+  display: "swap",
+  src: [
+    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Semibold.ttf", weight: "600", style: "normal" },
+    { path: "../../public/fonts/Proxima-Nova-Font-Family/ProximaNova-Bold.ttf", weight: "700", style: "normal" },
+  ],
+});
+
 const siteUrl = "https://davincimedia.studio";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Davinci Project Studio — Coming Soon",
+    default: "Davinci Project Studio",
     template: "%s | Davinci Project Studio",
   },
   description:
@@ -63,10 +86,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${proxima.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         {children}
+        <div id="mobile-menu-root" />
       </body>
     </html>
   );

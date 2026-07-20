@@ -41,6 +41,13 @@ Import alias: `@/*` → `./src/*`. Always use `@/…`, never long relative paths
 - **TypeScript:** strict mode. Prefer explicit prop types/interfaces for components; no `any`.
 - **Package manager:** use `pnpm` for every install/script. Do not introduce `npm`/`yarn` lockfiles.
 
+## Project Agent Skills
+
+Pre-installed skills inside `.agents/skills/` are available to help you work faster and safer:
+- **Vercel**: `deploy-to-vercel`, `vercel-optimize`, `vercel-cli-with-tokens`, `vercel-react-best-practices`, `vercel-react-view-transitions`.
+- **Diagnostics**: `react-doctor` (to audit/fix React issues), `improve-react`, `deslop` (to simplify code), `ship` (to land PRs).
+- **Web Quality**: `performance`, `core-web-vitals` (LCP, CLS, INP checks), `accessibility`, `seo`, and `web-quality-audit`.
+
 ## Commands
 
 ```bash
@@ -51,3 +58,4 @@ pnpm lint    # eslint (eslint-config-next, flat config)
 ```
 
 Before considering a change done, run `pnpm lint` and `pnpm build` and fix anything they report.
+

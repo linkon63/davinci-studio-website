@@ -4,7 +4,9 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import Image from "next/image"
 import Link from "next/link"
-import { useRef, useState } from "react"
+import { usePathname } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 
 const menuItems = [
   { name: "WORK", path: "/work" },
@@ -17,8 +19,19 @@ const menuItems = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const pathname = usePathname()
   const overlayRef = useRef<HTMLDivElement>(null)
   const linksRef = useRef<HTMLDivElement>(null)
+
+  const isActive = (path: string) => {
+    if (path === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(path)
+  }
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
 
   useGSAP(() => {
     if (!overlayRef.current || !linksRef.current) return
@@ -30,7 +43,10 @@ export default function Navbar() {
     if (isMenuOpen) {
       gsap.set(overlayRef.current, { display: "flex" })
 
-      if (prefersReduced) return
+      if (prefersReduced) {
+        gsap.set(linksRef.current.children, { opacity: 1, y: 0 })
+        return
+      }
 
       const tl = gsap.timeline()
       tl.fromTo(
@@ -66,30 +82,35 @@ export default function Navbar() {
   }, { dependencies: [isMenuOpen] })
 
   return (
-    <nav className="bg-[#010101]">
+    <nav className="bg-[#010101] border-b border-zinc-900">
       <div className="max-w-[1320px] mx-auto flex items-center justify-between px-4 lg:px-6">
-        <Link href="/" className="flex items-center py-3">
+        <Link href="/" className="flex items-center py-2 sm:py-2 lg:py-3">
           <Image
             src="/logo.jpg"
             alt="Da Vinci Media"
-            width={76}
-            height={48}
+            width={948}
+            height={915}
             priority
-            className="h-[48px] w-[76px] object-contain"
+            className="h-14 lg:h-16 xl:h-18 w-auto object-contain"
           />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-[51px]">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.path}
-                className="text-white-color font-proxima font-semibold text-lg hover:text-recording-red transition-colors"
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          {menuItems.map((item) => {
+            const active = isActive(item.path)
+            return (
+              <li key={item.name}>
+                <Link
+                  href={item.path}
+                  className={`font-proxima font-semibold text-lg hover:text-recording-red transition-colors ${
+                    active ? "text-recording-red" : "text-white-color"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
 
         <button
@@ -127,19 +148,55 @@ export default function Navbar() {
           className="fixed inset-0 z-40 bg-[#010101] lg:hidden flex-col items-center justify-center"
         >
           <div ref={linksRef} className="flex flex-col items-center gap-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-white-color font-proxima font-semibold text-3xl hover:text-recording-red transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const active = isActive(item.path)
+              return (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`font-proxima font-semibold text-3xl hover:text-recording-red transition-colors ${
+                    active ? "text-recording-red" : "text-white-color"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </div>
         </div>
       </div>
+
+      {mounted &&
+        createPortal(
+          <div
+            ref={overlayRef}
+            style={{ display: "none" }}
+            className="fixed inset-0 z-40 bg-[#010101] flex-col items-center justify-center"
+          >
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center"
+              aria-label="Close menu"
+            >
+              <span className="absolute w-6 h-[2px] bg-white rotate-45" />
+              <span className="absolute w-6 h-[2px] bg-white -rotate-45" />
+            </button>
+            <div ref={linksRef} className="flex flex-col items-center gap-8">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white-color font-proxima font-semibold text-3xl hover:text-recording-red transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>,
+          document.getElementById("mobile-menu-root")!
+        )}
     </nav>
   )
 }

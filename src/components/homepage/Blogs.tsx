@@ -40,7 +40,7 @@ export default function Blogs() {
     }, []);
 
     useGSAP(() => {
-        gsap.from("#blog-card", {
+        gsap.from(".blog-card", {
             x: 200,
             duration: 1,
             stagger: 0.3,
@@ -48,7 +48,7 @@ export default function Blogs() {
             pacity: 0,
             filter: "blur(2px)",
             scrollTrigger: {
-                trigger: "#blog-card",
+                trigger: ".blog-card",
                 start: "top 90%",
                 end: "bottom 80%",
                 toggleActions: "play none none none",

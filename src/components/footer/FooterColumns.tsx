@@ -31,7 +31,7 @@ export default function FooterColumns() {
           <ul className="space-y-3 md:space-y-4 text-gray-400">
             {["About Us", "Contact Us", "FAQs", "Blog", "Support"].map((item) => (
               <li key={item} className="group cursor-pointer">
-                <span className="block text-stone-100 text-3xl font-semibold font-proxima leading-9 transition-all duration-300 group-hover:text-recording-red group-hover:translate-x-4">
+                <span className="block text-stone-100 text-xl sm:text-2xl md:text-3xl font-semibold font-proxima leading-9 transition-all duration-300 group-hover:text-recording-red group-hover:translate-x-4">
                   {item}
                 </span>
               </li>
@@ -42,7 +42,7 @@ export default function FooterColumns() {
         {/* Contact Us */}
         <div className="footer-col opacity-0">
           <h3 className="text-xl font-semibold text-neutral-400 leading-7 font-proxima mb-4 md:mb-6">Contact Us</h3>
-          <ul className="space-y-4 md:space-y-6 text-stone-100 text-3xl font-semibold font-proxima leading-9">
+          <ul className="space-y-4 md:space-y-6 text-stone-100 text-xl sm:text-2xl md:text-3xl font-semibold font-proxima leading-9">
             <li>Gareeb-e-Nawaz Ave, Sector 11, Uttara, Dhaka - 1230</li>
             <li>+880 1865 94 21 83</li>
             <li>contact@davincymedia.com</li>
